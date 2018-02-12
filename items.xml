@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item_list>
+  <item id="0">
+    <class>weapon</class>
+    <type>fists</type>
+    <name>Unarmed</name>
+    <power>1</power>
+  </item>
+  <item id="1">
+    <class>armor</class>
+    <type>all</type>
+    <name>Bare</name>
+    <power>0</power>
+  </item>
+  <item id="2">
+    <class>weapon</class>
+    <type>one-handed</type>
+    <name>Dagger</name>
+    <power>2</power>
+  </item>
+  <item id="3">
+    <class>armor</class>
+    <type>chest</type>
+    <name>Tunic</name>
+    <power>1</power>
+  </item>
+</item_list>
