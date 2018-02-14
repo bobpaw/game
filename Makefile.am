@@ -1,6 +1,8 @@
 AUTOMAKE_OPTIONS = gnu
-bin_PROGRAMS = game
-game_SOURCES = main.c
-include_HEADERS = main.h item.h player.h monster.h
+bin_PROGRAMS = game xml
+game_SOURCES = main.c main.h
+include_HEADERS = item.h player.h monster.h
 EXTRA_DIST = items.xml
-game_CFLAGS = $(xml2-config --cflags) $(xml2-config --libs)
+game_CFLAGS = -I/usr/include/libxml2 -lxml2
+xml_SOURCES = xml.c
+xml_CFLAGS = -I/usr/include/libxml2 -lxml2

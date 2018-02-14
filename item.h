@@ -9,23 +9,25 @@ enum CLASS {
   CLASS_ARMOR,
   CLASS_HOLD};
 typedef enum CLASS CLASS;
+const char * CLASS_STR[3] = {"Weapon", "Armor", "Holdable"};
 
-// Weapon Types
-const char WPN_TYPE_FISTS = 1;
-const char WPN_TYPE_ONEHAND = 2;
-
-// Armor Types
-const char ARM_TYPE_HAND =  0x01;
-const char ARM_TYPE_CHEST = 0x02;
-const char ARM_TYPE_LEGS =  0x04;
-const char ARM_TYPE_FEET =  0x08;
-const char ARM_TYPE_HEAD =  0x10;
-const char ARM_TYPE_ALL =   0x1F;
+// Weapon and Armor Types
+enum TYPE {
+  WPN_TYPE_FISTS = 1,
+  WPN_TYPE_ONEHAND,
+  ARM_TYPE_HAND,
+  ARM_TYPE_CHEST,
+  ARM_TYPE_LEGS,
+  ARM_TYPE_FEET,
+  ARM_TYPE_HEAD,
+  ARM_TYPE_ALL};
+typedef enum TYPE TYPE;
+const char * TYPE_STR[8] = {"Fists", "One-handed", "Hand", "Chest", "Legs", "Feet", "Head", "All"};
 
 typedef struct item_t {
   int id;
   CLASS class;
-  char type;
+  TYPE type;
   char * name;
   int power;
 } item_t, * item_tPtr;
