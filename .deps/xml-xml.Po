@@ -1,4 +1,4 @@
-xml-xml.o: xml.c /usr/include/stdc-predef.h /usr/include/stdlib.h \
+xml-xml.o: xml.c /usr/include/stdc-predef.h xml.h /usr/include/stdlib.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
@@ -68,6 +68,8 @@ xml-xml.o: xml.c /usr/include/stdc-predef.h /usr/include/stdlib.h \
  item.h
 
 /usr/include/stdc-predef.h:
+
+xml.h:
 
 /usr/include/stdlib.h:
 

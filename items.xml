@@ -30,4 +30,10 @@
     <name>Level 1 Potion</name>
     <power>1</power>
   </item>
+  <item id="5">
+    <class>armor</class>
+    <type>Shield</type>
+    <name>Leather Shield</name>
+    <power>2</power>
+  </item>
 </item_list>
