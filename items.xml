@@ -2,26 +2,32 @@
 <item_list>
   <item id="0">
     <class>weapon</class>
-    <type>fists</type>
+    <type>Fists</type>
     <name>Unarmed</name>
     <power>1</power>
   </item>
   <item id="1">
     <class>armor</class>
-    <type>all</type>
+    <type>All</type>
     <name>Bare</name>
     <power>0</power>
   </item>
   <item id="2">
     <class>weapon</class>
-    <type>one-handed</type>
+    <type>One-handed</type>
     <name>Dagger</name>
     <power>2</power>
   </item>
   <item id="3">
     <class>armor</class>
-    <type>chest</type>
+    <type>Chest</type>
     <name>Tunic</name>
+    <power>1</power>
+  </item>
+  <item id="4">
+    <class>hold</class>
+    <type>HP</type>
+    <name>Level 1 Potion</name>
     <power>1</power>
   </item>
 </item_list>

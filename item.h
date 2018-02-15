@@ -1,5 +1,6 @@
 #ifndef GAME_ITEMS_ITEM_H_
 #define GAME_ITEMS_ITEM_H_
+#define TYPE_COUNT 9
 
 // Constants
 
@@ -20,9 +21,11 @@ enum TYPE {
   ARM_TYPE_LEGS,
   ARM_TYPE_FEET,
   ARM_TYPE_HEAD,
-  ARM_TYPE_ALL};
+  ARM_TYPE_ALL,
+  HLD_TYPE_HP};
 typedef enum TYPE TYPE;
-const char * TYPE_STR[8] = {"Fists", "One-handed", "Hand", "Chest", "Legs", "Feet", "Head", "All"};
+
+const char * TYPE_STR[TYPE_COUNT] = {"Fists", "One-handed", "Hand", "Chest", "Legs", "Feet", "Head", "All", "HP"};
 
 typedef struct item_t {
   int id;
