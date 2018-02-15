@@ -32,8 +32,8 @@ int main (int argc, char * argv[]) {
   while (node != NULL) {
     if (!xmlStrcmp(node->name, (const xmlChar *) "item")) {
       ++itemcount;
-      items = (item_tPtr) realloc(items, itemcount * sizeof(item_t));
-      memset(items + (sizeof(item_t) * (itemcount - 1)), 0, sizeof(item_t));
+      items = realloc(items, itemcount * sizeof(item_t));
+      memset(items + (itemcount - 1), 0, sizeof(item_t));
       if (items == NULL) {
 	errno = ENOMEM;
 	perror("Couldn't realloc items\n");
