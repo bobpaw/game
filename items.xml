@@ -36,4 +36,10 @@
     <name>Leather Shield</name>
     <power>2</power>
   </item>
+  <item id="6">
+    <class>weapon</class>
+    <type>One-handed</type>
+    <name>Short Sword</name>
+    <power>3</power>
+  </item>
 </item_list>
