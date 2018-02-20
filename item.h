@@ -1,5 +1,5 @@
-#ifndef GAME_ITEMS_ITEM_H_
-#define GAME_ITEMS_ITEM_H_
+#ifndef GAME_ITEM_H_
+#define GAME_ITEM_H_
 #define TYPE_COUNT 10
 
 // Constants
@@ -35,4 +35,4 @@ typedef struct item_t {
   char * name;
   int power;
 } item_t, * item_tPtr;
-#endif // GAME_ITEMS_ITEM_H_
+#endif // GAME_ITEM_H_

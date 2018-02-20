@@ -9,6 +9,9 @@
 
 #include "item.h"
 
+#ifndef GAME_XML_H_
+#define GAME_XML_H_
+
 item_tPtr readxmlfile (const char * filename, int * count) {
   xmlDocPtr document;
   xmlNodePtr root, first_child, node, cur;
@@ -97,3 +100,5 @@ item_tPtr readxmlfile (const char * filename, int * count) {
   *count = itemcount;
   return items;
 }
+
+#endif // GAME_XML_H_

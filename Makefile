@@ -87,7 +87,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = game$(EXEEXT) xml$(EXEEXT)
+bin_PROGRAMS = game$(EXEEXT) xml$(EXEEXT) life$(EXEEXT)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -107,6 +107,11 @@ am_game_OBJECTS = game-main.$(OBJEXT)
 game_OBJECTS = $(am_game_OBJECTS)
 game_LDADD = $(LDADD)
 game_LINK = $(CCLD) $(game_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
+	-o $@
+am_life_OBJECTS = life-life.$(OBJEXT)
+life_OBJECTS = $(am_life_OBJECTS)
+life_LDADD = $(LDADD)
+life_LINK = $(CCLD) $(life_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
 am_xml_OBJECTS = xml-xml.$(OBJEXT)
 xml_OBJECTS = $(am_xml_OBJECTS)
@@ -145,8 +150,8 @@ AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(game_SOURCES) $(xml_SOURCES)
-DIST_SOURCES = $(game_SOURCES) $(xml_SOURCES)
+SOURCES = $(game_SOURCES) $(life_SOURCES) $(xml_SOURCES)
+DIST_SOURCES = $(game_SOURCES) $(life_SOURCES) $(xml_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -317,6 +322,8 @@ EXTRA_DIST = items.xml
 game_CFLAGS = -I/usr/include/libxml2 -lxml2 -lncurses
 xml_SOURCES = xml.c xml.h
 xml_CFLAGS = -I/usr/include/libxml2 -lxml2
+life_SOURCES = life.c life.h
+life_CFLAGS = -lncurses
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -417,6 +424,10 @@ game$(EXEEXT): $(game_OBJECTS) $(game_DEPENDENCIES) $(EXTRA_game_DEPENDENCIES)
 	@rm -f game$(EXEEXT)
 	$(AM_V_CCLD)$(game_LINK) $(game_OBJECTS) $(game_LDADD) $(LIBS)
 
+life$(EXEEXT): $(life_OBJECTS) $(life_DEPENDENCIES) $(EXTRA_life_DEPENDENCIES) 
+	@rm -f life$(EXEEXT)
+	$(AM_V_CCLD)$(life_LINK) $(life_OBJECTS) $(life_LDADD) $(LIBS)
+
 xml$(EXEEXT): $(xml_OBJECTS) $(xml_DEPENDENCIES) $(EXTRA_xml_DEPENDENCIES) 
 	@rm -f xml$(EXEEXT)
 	$(AM_V_CCLD)$(xml_LINK) $(xml_OBJECTS) $(xml_LDADD) $(LIBS)
@@ -428,6 +439,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/game-main.Po
+include ./$(DEPDIR)/life-life.Po
 include ./$(DEPDIR)/xml-xml.Po
 
 .c.o:
@@ -457,6 +469,20 @@ game-main.obj: main.c
 #	$(AM_V_CC)source='main.c' object='game-main.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(game_CFLAGS) $(CFLAGS) -c -o game-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+
+life-life.o: life.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(life_CFLAGS) $(CFLAGS) -MT life-life.o -MD -MP -MF $(DEPDIR)/life-life.Tpo -c -o life-life.o `test -f 'life.c' || echo '$(srcdir)/'`life.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/life-life.Tpo $(DEPDIR)/life-life.Po
+#	$(AM_V_CC)source='life.c' object='life-life.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(life_CFLAGS) $(CFLAGS) -c -o life-life.o `test -f 'life.c' || echo '$(srcdir)/'`life.c
+
+life-life.obj: life.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(life_CFLAGS) $(CFLAGS) -MT life-life.obj -MD -MP -MF $(DEPDIR)/life-life.Tpo -c -o life-life.obj `if test -f 'life.c'; then $(CYGPATH_W) 'life.c'; else $(CYGPATH_W) '$(srcdir)/life.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/life-life.Tpo $(DEPDIR)/life-life.Po
+#	$(AM_V_CC)source='life.c' object='life-life.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(life_CFLAGS) $(CFLAGS) -c -o life-life.obj `if test -f 'life.c'; then $(CYGPATH_W) 'life.c'; else $(CYGPATH_W) '$(srcdir)/life.c'; fi`
 
 xml-xml.o: xml.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xml_CFLAGS) $(CFLAGS) -MT xml-xml.o -MD -MP -MF $(DEPDIR)/xml-xml.Tpo -c -o xml-xml.o `test -f 'xml.c' || echo '$(srcdir)/'`xml.c

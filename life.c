@@ -1,10 +1,17 @@
-#include "main.h"
+#include "life.h"
 
 int main (int argc, char * argv[]) {
+  unsigned int RULE = 0;
+  int rule_size = 0;
+  char * rulestr = NULL;
+  printf("Rule Integer: ");
+  getline(&rulestr, (size_t *) &rule_size, stdin);
+  RULE = atoi(rulestr);
+  if (RULE > 262143) {
+    fprintf(stderr, "Invalid integer\n");
+    exit(EXIT_FAILURE);
+  }
   srand(time(NULL));
-  item_tPtr items = NULL;
-  int invent_used = 0;
-  int itemcount = 0;
   int ch = 0;
   int width = 36;
   int height = 18;
@@ -23,11 +30,6 @@ int main (int argc, char * argv[]) {
   int x = 3;
   int y = 3;
   int * invent_item_count = NULL;
-  items = readxmlfile("items.xml", &itemcount);
-  if (items == NULL) {
-    exit(EXIT_FAILURE);
-  }
-  invent_item_count = calloc(itemcount, sizeof(int));
   initscr();
   raw();
   curs_set(0);
@@ -57,9 +59,16 @@ int main (int argc, char * argv[]) {
       if (y < height - 1) y++;
     }
     memcpy(map, base_map, height * width);
-    map[y*width + x] = '@';
     for (int i = 0; i < height; ++i) {
-      printw("%.*s\n", width, (map + (i * width)));
+      if (i == y) {
+	printw("%.*s", x-1, map + (i * width));
+	standout();
+	printw("%c", *(map + (i * width) + x));
+	standend();
+	printw("%.*s\n", width-x, (map + (i * width) + x + 1));
+      } else {
+	printw("%.*s\n", width, (map + (i * width)));
+      }
     }
     refresh();
     ch = getch();
@@ -67,10 +76,5 @@ int main (int argc, char * argv[]) {
   endwin();
   free(base_map);
   free(map);
-  for (int i = 0; i < itemcount; i++) {
-    free(items[i].name);
-  }
-  free(items);
-  free(invent_item_count);
   exit(EXIT_SUCCESS);
 }
