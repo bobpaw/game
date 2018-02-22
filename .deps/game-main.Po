@@ -32,7 +32,7 @@ game-main.o: main.c /usr/include/stdc-predef.h main.h \
  /usr/lib/gcc/x86_64-linux-gnu/6/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/6/include/stdbool.h /usr/include/unctrl.h \
- /usr/include/curses.h item.h monster.h player.h xml.h \
+ /usr/include/curses.h config.h item.h monster.h player.h xml.h \
  /usr/include/errno.h /usr/include/x86_64-linux-gnu/bits/errno.h \
  /usr/include/linux/errno.h /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
@@ -165,6 +165,8 @@ main.h:
 /usr/include/unctrl.h:
 
 /usr/include/curses.h:
+
+config.h:
 
 item.h:
 

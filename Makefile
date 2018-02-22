@@ -108,7 +108,7 @@ game_OBJECTS = $(am_game_OBJECTS)
 game_LDADD = $(LDADD)
 game_LINK = $(CCLD) $(game_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
-am_life_OBJECTS = life-life.$(OBJEXT)
+am_life_OBJECTS = life-life.$(OBJEXT) life-cmdline-life.$(OBJEXT)
 life_OBJECTS = $(am_life_OBJECTS)
 life_LDADD = $(LDADD)
 life_LINK = $(CCLD) $(life_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
@@ -316,13 +316,13 @@ top_build_prefix =
 top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = gnu
-game_SOURCES = main.c main.h
-include_HEADERS = item.h player.h monster.h
+game_SOURCES = main.c
+include_HEADERS = item.h player.h monster.h cmdline-life.h main.h xml.h life.h
 EXTRA_DIST = items.xml
 game_CFLAGS = -I/usr/include/libxml2 -lxml2 -lncurses
-xml_SOURCES = xml.c xml.h
+xml_SOURCES = xml.c
 xml_CFLAGS = -I/usr/include/libxml2 -lxml2
-life_SOURCES = life.c life.h
+life_SOURCES = life.c cmdline-life.c
 life_CFLAGS = -lncurses
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -439,6 +439,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/game-main.Po
+include ./$(DEPDIR)/life-cmdline-life.Po
 include ./$(DEPDIR)/life-life.Po
 include ./$(DEPDIR)/xml-xml.Po
 
@@ -483,6 +484,20 @@ life-life.obj: life.c
 #	$(AM_V_CC)source='life.c' object='life-life.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(life_CFLAGS) $(CFLAGS) -c -o life-life.obj `if test -f 'life.c'; then $(CYGPATH_W) 'life.c'; else $(CYGPATH_W) '$(srcdir)/life.c'; fi`
+
+life-cmdline-life.o: cmdline-life.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(life_CFLAGS) $(CFLAGS) -MT life-cmdline-life.o -MD -MP -MF $(DEPDIR)/life-cmdline-life.Tpo -c -o life-cmdline-life.o `test -f 'cmdline-life.c' || echo '$(srcdir)/'`cmdline-life.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/life-cmdline-life.Tpo $(DEPDIR)/life-cmdline-life.Po
+#	$(AM_V_CC)source='cmdline-life.c' object='life-cmdline-life.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(life_CFLAGS) $(CFLAGS) -c -o life-cmdline-life.o `test -f 'cmdline-life.c' || echo '$(srcdir)/'`cmdline-life.c
+
+life-cmdline-life.obj: cmdline-life.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(life_CFLAGS) $(CFLAGS) -MT life-cmdline-life.obj -MD -MP -MF $(DEPDIR)/life-cmdline-life.Tpo -c -o life-cmdline-life.obj `if test -f 'cmdline-life.c'; then $(CYGPATH_W) 'cmdline-life.c'; else $(CYGPATH_W) '$(srcdir)/cmdline-life.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/life-cmdline-life.Tpo $(DEPDIR)/life-cmdline-life.Po
+#	$(AM_V_CC)source='cmdline-life.c' object='life-cmdline-life.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(life_CFLAGS) $(CFLAGS) -c -o life-cmdline-life.obj `if test -f 'cmdline-life.c'; then $(CYGPATH_W) 'cmdline-life.c'; else $(CYGPATH_W) '$(srcdir)/cmdline-life.c'; fi`
 
 xml-xml.o: xml.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xml_CFLAGS) $(CFLAGS) -MT xml-xml.o -MD -MP -MF $(DEPDIR)/xml-xml.Tpo -c -o xml-xml.o `test -f 'xml.c' || echo '$(srcdir)/'`xml.c
