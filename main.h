@@ -8,6 +8,7 @@
 #include <ncurses.h>
 
 // Project libraries
+#include "config.h"
 #include "item.h"
 #include "monster.h"
 #include "player.h"

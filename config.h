@@ -4,8 +4,25 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
+/* Define to 1 if you have the `ncurses' library (-lncurses). */
+#define HAVE_LIBNCURSES 1
+
+/* Define to 1 if you have the `xml2' library (-lxml2). */
+#define HAVE_LIBXML2 1
+
+/* Define to 1 if your system has a GNU libc compatible `malloc' function, and
+   to 0 otherwise. */
+#define HAVE_MALLOC 1
+
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
+
+/* Define to 1 if you have the `memset' function. */
+#define HAVE_MEMSET 1
+
+/* Define to 1 if your system has a GNU libc compatible `realloc' function,
+   and to 0 otherwise. */
+#define HAVE_REALLOC 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
@@ -54,3 +71,12 @@
 
 /* Version number of package */
 #define VERSION "1.0"
+
+/* Define to rpl_malloc if the replacement function should be used. */
+/* #undef malloc */
+
+/* Define to rpl_realloc if the replacement function should be used. */
+/* #undef realloc */
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+/* #undef size_t */
