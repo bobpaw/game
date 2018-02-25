@@ -437,7 +437,7 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/aiden/game'
+ac_pwd='/home/bobpaw/game'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
@@ -641,12 +641,12 @@ S["mkdir_p"]="$(MKDIR_P)"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]=""
-S["install_sh"]="${SHELL} /home/aiden/game/install-sh"
-S["MAKEINFO"]="${SHELL} /home/aiden/game/missing makeinfo"
-S["AUTOHEADER"]="${SHELL} /home/aiden/game/missing autoheader"
-S["AUTOMAKE"]="${SHELL} /home/aiden/game/missing automake-1.15"
-S["AUTOCONF"]="${SHELL} /home/aiden/game/missing autoconf"
-S["ACLOCAL"]="${SHELL} /home/aiden/game/missing aclocal-1.15"
+S["install_sh"]="${SHELL} /home/bobpaw/game/install-sh"
+S["MAKEINFO"]="${SHELL} /home/bobpaw/game/missing makeinfo"
+S["AUTOHEADER"]="${SHELL} /home/bobpaw/game/missing autoheader"
+S["AUTOMAKE"]="${SHELL} /home/bobpaw/game/missing automake-1.15"
+S["AUTOCONF"]="${SHELL} /home/bobpaw/game/missing autoconf"
+S["ACLOCAL"]="${SHELL} /home/bobpaw/game/missing aclocal-1.15"
 S["VERSION"]="1.0"
 S["PACKAGE"]="game"
 S["CYGPATH_W"]="echo"
