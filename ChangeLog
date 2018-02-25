@@ -1,0 +1,9 @@
+2018-02-25  Aiden Woodruff  <aiden.woodruff@gmail.com>
+
+	* life.c,life.h,updatemap.h,life.ggo,rulestoint.py,cmdline-life.c: Files moved into subdir life.
+
+	* configure.ac: Updated for subdir.
+	Moved AM_INIT_AUTOMAKE to top of file.
+
+	* README.md: Changed listing for life.
+
