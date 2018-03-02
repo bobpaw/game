@@ -5,3 +5,5 @@
 
 The directory life is mostly self contained and has the `life` program.
 It runs arbitrary cellular automata.
+
+To anybody editing it, I'd recommend running "make maintainer-clean" before committing. :)
