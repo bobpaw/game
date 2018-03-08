@@ -2,32 +2,21 @@
 
 int main (int argc, char * argv[]) {
   srand(time(NULL));
-  item_tPtr items = NULL;
-  int invent_used = 0;
-  int itemcount = 0;
   int ch = 0;
   int width = 36;
   int height = 18;
   char * base_map = NULL;
-  base_map = malloc(height * width+1);
+  base_map = genmaze(width, height, '#', '.');
   if (base_map == NULL) {
-    fprintf(stderr, "Ran out of memory\n");
+    fprintf(stderr, "Error creating maze\n");
     exit(EXIT_FAILURE);
   }
-  memset(base_map, 0, height * width + 1);
-  memset(base_map, '.', height * width);
   char * map = NULL;
   map = malloc(height * width+1);
   memset(map, 0, height * width + 1);
   memcpy(map, base_map, height * width);
   int x = 3;
   int y = 3;
-  int * invent_item_count = NULL;
-  items = readxmlfile("items.xml", &itemcount);
-  if (items == NULL) {
-    exit(EXIT_FAILURE);
-  }
-  invent_item_count = calloc(itemcount, sizeof(int));
   initscr();
   raw();
   curs_set(0);
@@ -61,16 +50,12 @@ int main (int argc, char * argv[]) {
     for (int i = 0; i < height; ++i) {
       printw("%.*s\n", width, (map + (i * width)));
     }
+    printw("(x, y): (%d, %d)", x, y);
     refresh();
     ch = getch();
   }
   endwin();
   free(base_map);
   free(map);
-  for (int i = 0; i < itemcount; i++) {
-    free(items[i].name);
-  }
-  free(items);
-  free(invent_item_count);
   exit(EXIT_SUCCESS);
 }
