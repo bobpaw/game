@@ -1,3 +1,10 @@
+2018-03-20  Aiden Woodruff  <aiden.woodruff@gmail.com>
+
+	* maze.h (genmaze): Returns bigger maze of size width*height*4
+	Doesn't open walls
+
+	* put.c (main): Uncommented region.
+
 2018-03-19  Aiden Woodruff  <aiden.woodruff@gmail.com>
 
 	* runmazeanalytics.sh: New file
