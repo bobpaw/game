@@ -4,7 +4,7 @@
 AC_PREREQ([2.69])
 AC_INIT([maze], [1.0], [aiden.woodruff@gmail.com])
 AC_CONFIG_AUX_DIR([.])
-AC_CONFIG_SRCDIR([maze.c])
+AC_CONFIG_SRCDIR([maze.h])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.

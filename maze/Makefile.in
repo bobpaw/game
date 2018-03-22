@@ -103,7 +103,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(includedir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_maze_OBJECTS = maze-maze.$(OBJEXT)
+am_maze_OBJECTS = maze-main.$(OBJEXT)
 maze_OBJECTS = $(am_maze_OBJECTS)
 maze_LDADD = $(LDADD)
 maze_LINK = $(CCLD) $(maze_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
@@ -311,11 +311,11 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_OPTIONS = gnu
-maze_SOURCES = maze.c
+maze_SOURCES = main.c
 maze_CFLAGS = -lncurses -ltinfo -I$(srcdir)
 put_SOURCES = put.c
-put_CFLAGS = -lncurses -ltinfo -I$(srcdir)
-include_HEADERS = maze.h shuffle.h
+put_CFLAGS = -I$(srcdir)
+include_HEADERS = maze.h shuffle.h main.h
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -426,7 +426,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/maze-maze.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/maze-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/put-put.Po@am__quote@
 
 .c.o:
@@ -443,19 +443,19 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-maze-maze.o: maze.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(maze_CFLAGS) $(CFLAGS) -MT maze-maze.o -MD -MP -MF $(DEPDIR)/maze-maze.Tpo -c -o maze-maze.o `test -f 'maze.c' || echo '$(srcdir)/'`maze.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/maze-maze.Tpo $(DEPDIR)/maze-maze.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='maze.c' object='maze-maze.o' libtool=no @AMDEPBACKSLASH@
+maze-main.o: main.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(maze_CFLAGS) $(CFLAGS) -MT maze-main.o -MD -MP -MF $(DEPDIR)/maze-main.Tpo -c -o maze-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/maze-main.Tpo $(DEPDIR)/maze-main.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='maze-main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(maze_CFLAGS) $(CFLAGS) -c -o maze-maze.o `test -f 'maze.c' || echo '$(srcdir)/'`maze.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(maze_CFLAGS) $(CFLAGS) -c -o maze-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
 
-maze-maze.obj: maze.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(maze_CFLAGS) $(CFLAGS) -MT maze-maze.obj -MD -MP -MF $(DEPDIR)/maze-maze.Tpo -c -o maze-maze.obj `if test -f 'maze.c'; then $(CYGPATH_W) 'maze.c'; else $(CYGPATH_W) '$(srcdir)/maze.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/maze-maze.Tpo $(DEPDIR)/maze-maze.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='maze.c' object='maze-maze.obj' libtool=no @AMDEPBACKSLASH@
+maze-main.obj: main.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(maze_CFLAGS) $(CFLAGS) -MT maze-main.obj -MD -MP -MF $(DEPDIR)/maze-main.Tpo -c -o maze-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/maze-main.Tpo $(DEPDIR)/maze-main.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='maze-main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(maze_CFLAGS) $(CFLAGS) -c -o maze-maze.obj `if test -f 'maze.c'; then $(CYGPATH_W) 'maze.c'; else $(CYGPATH_W) '$(srcdir)/maze.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(maze_CFLAGS) $(CFLAGS) -c -o maze-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
 
 put-put.o: put.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(put_CFLAGS) $(CFLAGS) -MT put-put.o -MD -MP -MF $(DEPDIR)/put-put.Tpo -c -o put-put.o `test -f 'put.c' || echo '$(srcdir)/'`put.c
