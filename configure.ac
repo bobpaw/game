@@ -12,9 +12,9 @@ AC_PROG_CC
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lncurses':
-AC_CHECK_LIB([ncurses], [refresh])
+AC_CHECK_LIB([ncurses], [refresh], [], [AC_MSG_ERROR([ncurses not found])])
 # FIXME: Replace `main' with a function in `-lxml2':
-AC_CHECK_LIB([xml2], [xmlFreeDoc])
+AC_CHECK_LIB([xml2], [xmlFreeDoc], [], [AC_MSG_ERROR([xml2 not found])])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
