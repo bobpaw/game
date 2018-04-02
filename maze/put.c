@@ -17,6 +17,7 @@
 */
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "maze.h"
 
@@ -62,7 +63,7 @@ int main (int argc, char * argv[]) {
     printf("\n");
   }
   printf("done\n");
-  if ((argc == 4 && argv[3] == "-c") || (argc == 2 && argv[1] == "-c")) {
+  if ((argc == 4 && strcmp(argv[3], "-c") == 0) || (argc == 2 && strcmp(argv[1], "-c") == 0)) {
     char * map = NULL;
     map = genmaze(width, height, &retwidth, &retheight, '#', '.', maze);
     for (int i = 0; i < retheight; i++) {

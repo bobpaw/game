@@ -94,7 +94,11 @@ int main (int argc, char * argv[]) {
   starttime = time(NULL);
   while (time(NULL) - starttime < 3);
   endwin();
-  printf("Congratulations. You win!\n");
+  if (loser == 0) {
+    printf("Congratulations. You win!\n");
+  } else {
+    printf("Loser: :(\n");
+  }
   free(base_map);
   free(map);
   exit(EXIT_SUCCESS);
