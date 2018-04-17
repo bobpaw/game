@@ -1,8 +1,6 @@
 language: c
 git:
   depth: false
-branches:
-  only: master
 compiler:
   - clang
   - gcc
