@@ -4,14 +4,14 @@ git:
 compiler:
   - clang
   - gcc
+os:
+  - linux
+  - osx
 addons:
   apt:
     packages:
     - libncurses-dev
     - libxml2-dev
     - make
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libncurses-dev libxml2-dev make
 script:
   - tar zxf game-1.0.tar.gz && cd game-1.0 && ./configure && make && make check
