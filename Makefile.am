@@ -1,7 +1,7 @@
 SUBDIRS = life maze
 ncurses_flags = `ncurses5-config --libs` `ncurses5-config --cflags`
 libxml2_flags = `xml2-config --libs` `xml2-config --cflags`
-cstd_flag = -std=c11
+CFLAGS = -std=c11
 AUTOMAKE_OPTIONS = gnu
 bin_PROGRAMS = game xml
 game_SOURCES = main.c
