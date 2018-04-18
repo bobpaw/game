@@ -35,6 +35,6 @@ before_script:
 # Actually check if it works
 script:
   - ./configure && make && make check
-  - xml
+  - ./xml
   - maze/maze -V
   - life/life -V
