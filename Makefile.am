@@ -1,13 +1,11 @@
 SUBDIRS = life maze
-ncurses_flags = `ncurses5-config --libs` `ncurses5-config --cflags`
-libxml2_flags = `xml2-config --libs` `xml2-config --cflags`
 AUTOMAKE_OPTIONS = gnu
 bin_PROGRAMS = game xml
 game_SOURCES = main.c
 include_HEADERS = item.h player.h monster.h main.h xml.h
 EXTRA_DIST = items.xml
-game_CFLAGS = $(ncurses_flags) $(libxml2_flags)
+game_CFLAGS =
 xml_SOURCES = xml.c
-xml_CFLAGS = $(libxml2_flags)
+xml_CFLAGS =
 maintainer-clean-local:
 	rm -f $(srcdir)/*~ $(srcdir)/\#*#
