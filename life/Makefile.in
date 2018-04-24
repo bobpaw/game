@@ -307,7 +307,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_OPTIONS = gnu
 life_SOURCES = life.c cmdline-life.c
-life_CFLAGS = $(ncurses_flags) -I$(srcdir)
+life_CFLAGS = -I$(srcdir)
 include_HEADERS = life.h updatemap.h cmdline-life.h
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am

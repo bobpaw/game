@@ -106,13 +106,9 @@ PROGRAMS = $(bin_PROGRAMS)
 am_game_OBJECTS = game-main.$(OBJEXT)
 game_OBJECTS = $(am_game_OBJECTS)
 game_LDADD = $(LDADD)
-game_LINK = $(CCLD) $(game_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
-	-o $@
 am_xml_OBJECTS = xml-xml.$(OBJEXT)
 xml_OBJECTS = $(am_xml_OBJECTS)
 xml_LDADD = $(LDADD)
-xml_LINK = $(CCLD) $(xml_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o \
-	$@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -353,15 +349,13 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = life maze
-ncurses_flags = `ncurses5-config --libs` `ncurses5-config --cflags`
-libxml2_flags = `xml2-config --libs` `xml2-config --cflags`
 AUTOMAKE_OPTIONS = gnu
 game_SOURCES = main.c
 include_HEADERS = item.h player.h monster.h main.h xml.h
 EXTRA_DIST = items.xml
-game_CFLAGS = $(ncurses_flags) $(libxml2_flags)
+game_CPPFLAGS = `xml2-config --cflags`
 xml_SOURCES = xml.c
-xml_CFLAGS = $(libxml2_flags)
+xml_CPPFLAGS = `xml2-config --cflags`
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -460,11 +454,11 @@ clean-binPROGRAMS:
 
 game$(EXEEXT): $(game_OBJECTS) $(game_DEPENDENCIES) $(EXTRA_game_DEPENDENCIES) 
 	@rm -f game$(EXEEXT)
-	$(AM_V_CCLD)$(game_LINK) $(game_OBJECTS) $(game_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK) $(game_OBJECTS) $(game_LDADD) $(LIBS)
 
 xml$(EXEEXT): $(xml_OBJECTS) $(xml_DEPENDENCIES) $(EXTRA_xml_DEPENDENCIES) 
 	@rm -f xml$(EXEEXT)
-	$(AM_V_CCLD)$(xml_LINK) $(xml_OBJECTS) $(xml_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK) $(xml_OBJECTS) $(xml_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -490,32 +484,32 @@ distclean-compile:
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 game-main.o: main.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(game_CFLAGS) $(CFLAGS) -MT game-main.o -MD -MP -MF $(DEPDIR)/game-main.Tpo -c -o game-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(game_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT game-main.o -MD -MP -MF $(DEPDIR)/game-main.Tpo -c -o game-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/game-main.Tpo $(DEPDIR)/game-main.Po
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='game-main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(game_CFLAGS) $(CFLAGS) -c -o game-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(game_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o game-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
 
 game-main.obj: main.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(game_CFLAGS) $(CFLAGS) -MT game-main.obj -MD -MP -MF $(DEPDIR)/game-main.Tpo -c -o game-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(game_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT game-main.obj -MD -MP -MF $(DEPDIR)/game-main.Tpo -c -o game-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/game-main.Tpo $(DEPDIR)/game-main.Po
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='game-main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(game_CFLAGS) $(CFLAGS) -c -o game-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(game_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o game-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
 
 xml-xml.o: xml.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xml_CFLAGS) $(CFLAGS) -MT xml-xml.o -MD -MP -MF $(DEPDIR)/xml-xml.Tpo -c -o xml-xml.o `test -f 'xml.c' || echo '$(srcdir)/'`xml.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(xml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT xml-xml.o -MD -MP -MF $(DEPDIR)/xml-xml.Tpo -c -o xml-xml.o `test -f 'xml.c' || echo '$(srcdir)/'`xml.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xml-xml.Tpo $(DEPDIR)/xml-xml.Po
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xml.c' object='xml-xml.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xml_CFLAGS) $(CFLAGS) -c -o xml-xml.o `test -f 'xml.c' || echo '$(srcdir)/'`xml.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(xml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o xml-xml.o `test -f 'xml.c' || echo '$(srcdir)/'`xml.c
 
 xml-xml.obj: xml.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xml_CFLAGS) $(CFLAGS) -MT xml-xml.obj -MD -MP -MF $(DEPDIR)/xml-xml.Tpo -c -o xml-xml.obj `if test -f 'xml.c'; then $(CYGPATH_W) 'xml.c'; else $(CYGPATH_W) '$(srcdir)/xml.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(xml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT xml-xml.obj -MD -MP -MF $(DEPDIR)/xml-xml.Tpo -c -o xml-xml.obj `if test -f 'xml.c'; then $(CYGPATH_W) 'xml.c'; else $(CYGPATH_W) '$(srcdir)/xml.c'; fi`
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xml-xml.Tpo $(DEPDIR)/xml-xml.Po
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xml.c' object='xml-xml.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xml_CFLAGS) $(CFLAGS) -c -o xml-xml.obj `if test -f 'xml.c'; then $(CYGPATH_W) 'xml.c'; else $(CYGPATH_W) '$(srcdir)/xml.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(xml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o xml-xml.obj `if test -f 'xml.c'; then $(CYGPATH_W) 'xml.c'; else $(CYGPATH_W) '$(srcdir)/xml.c'; fi`
 install-includeHEADERS: $(include_HEADERS)
 	@$(NORMAL_INSTALL)
 	@list='$(include_HEADERS)'; test -n "$(includedir)" || list=; \

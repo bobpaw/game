@@ -203,7 +203,7 @@ CTAGS = ctags
 CSCOPE = cscope
 AM_RECURSIVE_TARGETS = cscope
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in AUTHORS \
-	COPYING ChangeLog INSTALL NEWS README compile depcomp \
+	COPYING ChangeLog INSTALL NEWS README TODO compile depcomp \
 	install-sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
@@ -312,7 +312,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_OPTIONS = gnu
 maze_SOURCES = main.c cmdline-maze.c
-maze_CFLAGS = $(ncurses_flags) -I$(srcdir)
+maze_CFLAGS = -I$(srcdir)
 put_SOURCES = put.c
 put_CFLAGS = -I$(srcdir)
 include_HEADERS = maze.h shuffle.h main.h cmdline-maze.h
