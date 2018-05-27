@@ -6,9 +6,6 @@
 /* Define to 1 if you have the `ncurses' library (-lncurses). */
 #undef HAVE_LIBNCURSES
 
-/* Define to 1 if you have the `xml2' library (-lxml2). */
-#undef HAVE_LIBXML2
-
 /* Define to 1 if your system has a GNU libc compatible `malloc' function, and
    to 0 otherwise. */
 #undef HAVE_MALLOC
@@ -71,11 +68,21 @@
 /* Version number of package */
 #undef VERSION
 
+/* Define for Solaris 2.5.1 so the uint8_t typedef from <sys/synch.h>,
+   <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
+   #define below would cause a syntax error. */
+#undef _UINT8_T
+
 /* Define to rpl_malloc if the replacement function should be used. */
 #undef malloc
 
 /* Define to rpl_realloc if the replacement function should be used. */
 #undef realloc
 
-/* Define to `unsigned int' if <sys/types.h> does not define. */
-#undef size_t
+/* Define to the type of an unsigned integer type of width exactly 16 bits if
+   such a type exists and the standard includes do not define it. */
+#undef uint16_t
+
+/* Define to the type of an unsigned integer type of width exactly 8 bits if
+   such a type exists and the standard includes do not define it. */
+#undef uint8_t

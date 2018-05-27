@@ -15,6 +15,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+// Include for int types
+#include <stdint.h>
+
 #ifndef GAME_ITEM_H_
 #define GAME_ITEM_H_
 #define TYPE_COUNT 10
@@ -46,10 +50,10 @@ typedef enum TYPE TYPE;
 const char * TYPE_STR[TYPE_COUNT] = {"Fists", "One-handed", "Hand", "Chest", "Legs", "Feet", "Head", "Shield", "All", "HP"};
 
 typedef struct item_t {
-  int id;
+  uint16_t id;
   CLASS class;
   TYPE type;
   char * name;
-  int power;
+  uint8_t power;
 } item_t, * item_tPtr;
 #endif // GAME_ITEM_H_

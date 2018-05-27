@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+#include <stdint.h>
 
 // Module Libraries
 #include <ncurses.h>
@@ -12,4 +13,4 @@
 #include "item.h"
 #include "monster.h"
 #include "player.h"
-#include "xml.h"
+#include "itemlist.h"

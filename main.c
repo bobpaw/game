@@ -19,9 +19,7 @@
 
 int main (int argc, char * argv[]) {
   srand(time(NULL));
-  item_tPtr items = NULL;
   int invent_used = 0;
-  int itemcount = 0;
   int ch = 0;
   int width = 36;
   int height = 18;
@@ -40,11 +38,7 @@ int main (int argc, char * argv[]) {
   int x = 3;
   int y = 3;
   int * invent_item_count = NULL;
-  items = readxmlfile("items.xml", &itemcount);
-  if (items == NULL) {
-    exit(EXIT_FAILURE);
-  }
-  invent_item_count = calloc(itemcount, sizeof(int));
+  invent_item_count = calloc(item_count, sizeof(uint16_t));
   initscr();
   raw();
   curs_set(0);
@@ -84,10 +78,6 @@ int main (int argc, char * argv[]) {
   endwin();
   free(base_map);
   free(map);
-  for (int i = 0; i < itemcount; i++) {
-    free(items[i].name);
-  }
-  free(items);
   free(invent_item_count);
   exit(EXIT_SUCCESS);
 }

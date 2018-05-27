@@ -7,6 +7,7 @@ AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_SRCDIR([main.c])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
+
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_CC_C99
@@ -14,14 +15,13 @@ AC_PROG_CC_C99
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lncurses':
 AC_CHECK_LIB([ncurses], [refresh], [], [AC_MSG_ERROR([ncurses not found])])
-# FIXME: Replace `main' with a function in `-lxml2':
-AC_CHECK_LIB([xml2], [xmlFreeDoc], [], [AC_MSG_ERROR([xml2 not found])])
 
 # Checks for header files.
-AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
+AC_CHECK_HEADERS([stdlib.h string.h unistd.h string.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_TYPE_SIZE_T
+AC_TYPE_UINT8_T
+AC_TYPE_UINT16_T
 
 # Checks for library functions.
 AC_FUNC_MALLOC
