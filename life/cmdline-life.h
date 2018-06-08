@@ -56,6 +56,12 @@ struct gengetopt_args_info
   int delay_arg;	/**< @brief Specify delay time.  */
   char * delay_orig;	/**< @brief Specify delay time original value given at command line.  */
   const char *delay_help; /**< @brief Specify delay time help description.  */
+  char * live_arg;	/**< @brief Character for a live cell.  */
+  char * live_orig;	/**< @brief Character for a live cell original value given at command line.  */
+  const char *live_help; /**< @brief Character for a live cell help description.  */
+  char * dead_arg;	/**< @brief Character for a dead cell.  */
+  char * dead_orig;	/**< @brief Character for a dead cell original value given at command line.  */
+  const char *dead_help; /**< @brief Character for a dead cell help description.  */
   
   unsigned int help_given ;	/**< @brief Whether help was given.  */
   unsigned int detailed_help_given ;	/**< @brief Whether detailed-help was given.  */
@@ -64,6 +70,8 @@ struct gengetopt_args_info
   unsigned int width_given ;	/**< @brief Whether width was given.  */
   unsigned int height_given ;	/**< @brief Whether height was given.  */
   unsigned int delay_given ;	/**< @brief Whether delay was given.  */
+  unsigned int live_given ;	/**< @brief Whether live was given.  */
+  unsigned int dead_given ;	/**< @brief Whether dead was given.  */
 
 } ;
 
