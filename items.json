@@ -1,0 +1,51 @@
+[
+    {
+        "power": 1,
+        "name": "Unarmed",
+        "id": 0,
+        "type": "Fists",
+        "class": "Weapon"
+    },
+    {
+        "power": 0,
+        "name": "Bare",
+        "id": 1,
+        "type": "All",
+        "class": "Armor"
+    },
+    {
+        "power": 2,
+        "name": "Dagger",
+        "id": 2,
+        "type": "One-handed",
+        "class": "Weapon"
+    },
+    {
+        "power": 1,
+        "name": "Tunic",
+        "id": 3,
+        "type": "Chest",
+        "class": "Armor"
+    },
+    {
+        "power": 1,
+        "name": "Level 1 Potion",
+        "id": 4,
+        "type": "HP",
+        "class": "Holdable"
+    },
+    {
+        "power": 2,
+        "name": "Leather Shield",
+        "id": 5,
+        "type": "Shield",
+        "class": "Armor"
+    },
+    {
+        "power": 3,
+        "name": "Short Sword",
+        "id": 6,
+        "type": "One-handed",
+        "class": "Weapon"
+    }
+]
