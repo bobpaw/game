@@ -38,10 +38,14 @@ const char *gengetopt_args_info_detailed_help[] = {
   "      --detailed-help  Print help, including all details and hidden options,\n                         and exit",
   "  -V, --version        Print version and exit",
   "  -r, --ruleint=rule   Specify rule-int on command line  (default=`6152')",
+  "\nDimensions:",
   "  -W, --width=width    Specify width",
   "  -H, --height=height  Specify height",
+  "  -m, --maximize       Maximize dimensions for terminal",
+  "  If specified, cancels out height and/or width options",
   "  -d, --delay=delay    Specify delay time",
   "  Specify delay time, multiplied by 10ms",
+  "\nCharacters:",
   "  -L, --live=live      Character for a live cell",
   "  -D, --dead=dead      Character for a dead cell",
     0
@@ -57,13 +61,16 @@ init_help_array(void)
   gengetopt_args_info_help[4] = gengetopt_args_info_detailed_help[4];
   gengetopt_args_info_help[5] = gengetopt_args_info_detailed_help[5];
   gengetopt_args_info_help[6] = gengetopt_args_info_detailed_help[6];
-  gengetopt_args_info_help[7] = gengetopt_args_info_detailed_help[8];
+  gengetopt_args_info_help[7] = gengetopt_args_info_detailed_help[7];
   gengetopt_args_info_help[8] = gengetopt_args_info_detailed_help[9];
-  gengetopt_args_info_help[9] = 0; 
+  gengetopt_args_info_help[9] = gengetopt_args_info_detailed_help[11];
+  gengetopt_args_info_help[10] = gengetopt_args_info_detailed_help[12];
+  gengetopt_args_info_help[11] = gengetopt_args_info_detailed_help[13];
+  gengetopt_args_info_help[12] = 0; 
   
 }
 
-const char *gengetopt_args_info_help[10];
+const char *gengetopt_args_info_help[13];
 
 typedef enum {ARG_NO
   , ARG_STRING
@@ -92,6 +99,7 @@ void clear_given (struct gengetopt_args_info *args_info)
   args_info->ruleint_given = 0 ;
   args_info->width_given = 0 ;
   args_info->height_given = 0 ;
+  args_info->maximize_given = 0 ;
   args_info->delay_given = 0 ;
   args_info->live_given = 0 ;
   args_info->dead_given = 0 ;
@@ -122,11 +130,12 @@ void init_args_info(struct gengetopt_args_info *args_info)
   args_info->detailed_help_help = gengetopt_args_info_detailed_help[1] ;
   args_info->version_help = gengetopt_args_info_detailed_help[2] ;
   args_info->ruleint_help = gengetopt_args_info_detailed_help[3] ;
-  args_info->width_help = gengetopt_args_info_detailed_help[4] ;
-  args_info->height_help = gengetopt_args_info_detailed_help[5] ;
-  args_info->delay_help = gengetopt_args_info_detailed_help[6] ;
-  args_info->live_help = gengetopt_args_info_detailed_help[8] ;
-  args_info->dead_help = gengetopt_args_info_detailed_help[9] ;
+  args_info->width_help = gengetopt_args_info_detailed_help[5] ;
+  args_info->height_help = gengetopt_args_info_detailed_help[6] ;
+  args_info->maximize_help = gengetopt_args_info_detailed_help[7] ;
+  args_info->delay_help = gengetopt_args_info_detailed_help[9] ;
+  args_info->live_help = gengetopt_args_info_detailed_help[12] ;
+  args_info->dead_help = gengetopt_args_info_detailed_help[13] ;
   
 }
 
@@ -269,6 +278,8 @@ cmdline_parser_dump(FILE *outfile, struct gengetopt_args_info *args_info)
     write_into_file(outfile, "width", args_info->width_orig, 0);
   if (args_info->height_given)
     write_into_file(outfile, "height", args_info->height_orig, 0);
+  if (args_info->maximize_given)
+    write_into_file(outfile, "maximize", 0, 0 );
   if (args_info->delay_given)
     write_into_file(outfile, "delay", args_info->delay_orig, 0);
   if (args_info->live_given)
@@ -531,13 +542,14 @@ cmdline_parser_internal (
         { "ruleint",	1, NULL, 'r' },
         { "width",	1, NULL, 'W' },
         { "height",	1, NULL, 'H' },
+        { "maximize",	0, NULL, 'm' },
         { "delay",	1, NULL, 'd' },
         { "live",	1, NULL, 'L' },
         { "dead",	1, NULL, 'D' },
         { 0,  0, 0, 0 }
       };
 
-      c = getopt_long (argc, argv, "hVr:W:H:d:L:D:", long_options, &option_index);
+      c = getopt_long (argc, argv, "hVr:W:H:md:L:D:", long_options, &option_index);
 
       if (c == -1) break;	/* Exit from `while (1)' loop.  */
 
@@ -585,6 +597,18 @@ cmdline_parser_internal (
               &(local_args_info.height_given), optarg, 0, 0, ARG_INT,
               check_ambiguity, override, 0, 0,
               "height", 'H',
+              additional_error))
+            goto failure;
+        
+          break;
+        case 'm':	/* Maximize dimensions for terminal.  */
+        
+        
+          if (update_arg( 0 , 
+               0 , &(args_info->maximize_given),
+              &(local_args_info.maximize_given), optarg, 0, 0, ARG_NO,
+              check_ambiguity, override, 0, 0,
+              "maximize", 'm',
               additional_error))
             goto failure;
         
