@@ -27,10 +27,13 @@ addons:
     - libxml2-dev
     - make
 
+## UPDATE: Release is important, but I need to check developement
 # Make sure to change to the distribution directory
-before_script:
-  - tar zxf "game-${VERSION}.tar.gz"
-  - cd "game-${VERSION}"
+#before_script:
+#  - tar zxf "game-${VERSION}.tar.gz"
+#  - cd "game-${VERSION}"
+
+
 
 # Actually check if it works
 script:
