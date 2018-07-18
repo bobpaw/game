@@ -1,3 +1,11 @@
+2018-06-17  Aiden Woodruff  <aiden.woodruff@gmail.com>
+
+	* xml.c,xml.h: Files removed because they were for testing and related thing
+	is gone.
+
+	* .travis.yml: Removed apt xml requirements
+	Removed xml test
+
 2018-02-25  Aiden Woodruff  <aiden.woodruff@gmail.com>
 
 	* life.c,life.h,updatemap.h,life.ggo,rulestoint.py,cmdline-life.c: Files moved into subdir life.
@@ -6,4 +14,3 @@
 	Moved AM_INIT_AUTOMAKE to top of file.
 
 	* README.md: Changed listing for life.
-

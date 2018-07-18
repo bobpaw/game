@@ -24,7 +24,6 @@ addons:
   apt:
     packages:
     - libncurses-dev
-    - libxml2-dev
     - make
 
 ## UPDATE: Release is important, but I need to check developement
@@ -38,6 +37,5 @@ addons:
 # Actually check if it works
 script:
   - ./configure && make && make check
-  - ./xml
   - maze/maze -V
   - life/life -V
