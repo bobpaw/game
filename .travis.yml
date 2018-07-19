@@ -23,8 +23,14 @@ os:
 addons:
   apt:
     packages:
+    - libncurses-base
     - libncurses-dev
     - make
+    - autoconf
+    - automake
+    - aclocal
+    - m4
+    - perl
 
 ## UPDATE: Release is important, but I need to check developement
 # Make sure to change to the distribution directory
@@ -37,5 +43,6 @@ addons:
 # Actually check if it works
 script:
   - ./configure && make && make check
-  - maze/maze -V
-  - life/life -V
+  - echo -n "q" | ./game > /dev/null
+  - echo -n "q" | life/life > /dev/null
+  - echo -n "q" | maze/maze > /dev/null
