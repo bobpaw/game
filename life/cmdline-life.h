@@ -47,6 +47,9 @@ struct gengetopt_args_info
   int ruleint_arg;	/**< @brief Specify rule-int on command line (default='6152').  */
   char * ruleint_orig;	/**< @brief Specify rule-int on command line original value given at command line.  */
   const char *ruleint_help; /**< @brief Specify rule-int on command line help description.  */
+  int delay_arg;	/**< @brief Specify delay time.  */
+  char * delay_orig;	/**< @brief Specify delay time original value given at command line.  */
+  const char *delay_help; /**< @brief Specify delay time help description.  */
   int width_arg;	/**< @brief Specify width.  */
   char * width_orig;	/**< @brief Specify width original value given at command line.  */
   const char *width_help; /**< @brief Specify width help description.  */
@@ -54,9 +57,6 @@ struct gengetopt_args_info
   char * height_orig;	/**< @brief Specify height original value given at command line.  */
   const char *height_help; /**< @brief Specify height help description.  */
   const char *maximize_help; /**< @brief Maximize dimensions for terminal help description.  */
-  int delay_arg;	/**< @brief Specify delay time.  */
-  char * delay_orig;	/**< @brief Specify delay time original value given at command line.  */
-  const char *delay_help; /**< @brief Specify delay time help description.  */
   char * live_arg;	/**< @brief Character for a live cell.  */
   char * live_orig;	/**< @brief Character for a live cell original value given at command line.  */
   const char *live_help; /**< @brief Character for a live cell help description.  */
@@ -68,10 +68,10 @@ struct gengetopt_args_info
   unsigned int detailed_help_given ;	/**< @brief Whether detailed-help was given.  */
   unsigned int version_given ;	/**< @brief Whether version was given.  */
   unsigned int ruleint_given ;	/**< @brief Whether ruleint was given.  */
+  unsigned int delay_given ;	/**< @brief Whether delay was given.  */
   unsigned int width_given ;	/**< @brief Whether width was given.  */
   unsigned int height_given ;	/**< @brief Whether height was given.  */
   unsigned int maximize_given ;	/**< @brief Whether maximize was given.  */
-  unsigned int delay_given ;	/**< @brief Whether delay was given.  */
   unsigned int live_given ;	/**< @brief Whether live was given.  */
   unsigned int dead_given ;	/**< @brief Whether dead was given.  */
 

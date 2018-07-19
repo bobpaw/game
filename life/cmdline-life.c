@@ -38,16 +38,16 @@ const char *gengetopt_args_info_detailed_help[] = {
   "      --detailed-help  Print help, including all details and hidden options,\n                         and exit",
   "  -V, --version        Print version and exit",
   "  -r, --ruleint=rule   Specify rule-int on command line  (default=`6152')",
+  "  -d, --delay=INT      Specify delay time",
+  "  Specify delay time, multiplied by 10ms",
   "\nDimensions:",
-  "  -W, --width=width    Specify width",
-  "  -H, --height=height  Specify height",
+  "  -W, --width=INT      Specify width",
+  "  -H, --height=INT     Specify height",
   "  -m, --maximize       Maximize dimensions for terminal",
   "  If specified, cancels out height and/or width options",
-  "  -d, --delay=delay    Specify delay time",
-  "  Specify delay time, multiplied by 10ms",
   "\nCharacters:",
-  "  -L, --live=live      Character for a live cell",
-  "  -D, --dead=dead      Character for a dead cell",
+  "  -L, --live=CH        Character for a live cell",
+  "  -D, --dead=CH        Character for a dead cell",
     0
 };
 
@@ -59,9 +59,9 @@ init_help_array(void)
   gengetopt_args_info_help[2] = gengetopt_args_info_detailed_help[2];
   gengetopt_args_info_help[3] = gengetopt_args_info_detailed_help[3];
   gengetopt_args_info_help[4] = gengetopt_args_info_detailed_help[4];
-  gengetopt_args_info_help[5] = gengetopt_args_info_detailed_help[5];
-  gengetopt_args_info_help[6] = gengetopt_args_info_detailed_help[6];
-  gengetopt_args_info_help[7] = gengetopt_args_info_detailed_help[7];
+  gengetopt_args_info_help[5] = gengetopt_args_info_detailed_help[6];
+  gengetopt_args_info_help[6] = gengetopt_args_info_detailed_help[7];
+  gengetopt_args_info_help[7] = gengetopt_args_info_detailed_help[8];
   gengetopt_args_info_help[8] = gengetopt_args_info_detailed_help[9];
   gengetopt_args_info_help[9] = gengetopt_args_info_detailed_help[11];
   gengetopt_args_info_help[10] = gengetopt_args_info_detailed_help[12];
@@ -97,10 +97,10 @@ void clear_given (struct gengetopt_args_info *args_info)
   args_info->detailed_help_given = 0 ;
   args_info->version_given = 0 ;
   args_info->ruleint_given = 0 ;
+  args_info->delay_given = 0 ;
   args_info->width_given = 0 ;
   args_info->height_given = 0 ;
   args_info->maximize_given = 0 ;
-  args_info->delay_given = 0 ;
   args_info->live_given = 0 ;
   args_info->dead_given = 0 ;
 }
@@ -111,9 +111,9 @@ void clear_args (struct gengetopt_args_info *args_info)
   FIX_UNUSED (args_info);
   args_info->ruleint_arg = 6152;
   args_info->ruleint_orig = NULL;
+  args_info->delay_orig = NULL;
   args_info->width_orig = NULL;
   args_info->height_orig = NULL;
-  args_info->delay_orig = NULL;
   args_info->live_arg = NULL;
   args_info->live_orig = NULL;
   args_info->dead_arg = NULL;
@@ -130,10 +130,10 @@ void init_args_info(struct gengetopt_args_info *args_info)
   args_info->detailed_help_help = gengetopt_args_info_detailed_help[1] ;
   args_info->version_help = gengetopt_args_info_detailed_help[2] ;
   args_info->ruleint_help = gengetopt_args_info_detailed_help[3] ;
-  args_info->width_help = gengetopt_args_info_detailed_help[5] ;
-  args_info->height_help = gengetopt_args_info_detailed_help[6] ;
-  args_info->maximize_help = gengetopt_args_info_detailed_help[7] ;
-  args_info->delay_help = gengetopt_args_info_detailed_help[9] ;
+  args_info->delay_help = gengetopt_args_info_detailed_help[4] ;
+  args_info->width_help = gengetopt_args_info_detailed_help[7] ;
+  args_info->height_help = gengetopt_args_info_detailed_help[8] ;
+  args_info->maximize_help = gengetopt_args_info_detailed_help[9] ;
   args_info->live_help = gengetopt_args_info_detailed_help[12] ;
   args_info->dead_help = gengetopt_args_info_detailed_help[13] ;
   
@@ -229,9 +229,9 @@ cmdline_parser_release (struct gengetopt_args_info *args_info)
 {
 
   free_string_field (&(args_info->ruleint_orig));
+  free_string_field (&(args_info->delay_orig));
   free_string_field (&(args_info->width_orig));
   free_string_field (&(args_info->height_orig));
-  free_string_field (&(args_info->delay_orig));
   free_string_field (&(args_info->live_arg));
   free_string_field (&(args_info->live_orig));
   free_string_field (&(args_info->dead_arg));
@@ -274,14 +274,14 @@ cmdline_parser_dump(FILE *outfile, struct gengetopt_args_info *args_info)
     write_into_file(outfile, "version", 0, 0 );
   if (args_info->ruleint_given)
     write_into_file(outfile, "ruleint", args_info->ruleint_orig, 0);
+  if (args_info->delay_given)
+    write_into_file(outfile, "delay", args_info->delay_orig, 0);
   if (args_info->width_given)
     write_into_file(outfile, "width", args_info->width_orig, 0);
   if (args_info->height_given)
     write_into_file(outfile, "height", args_info->height_orig, 0);
   if (args_info->maximize_given)
     write_into_file(outfile, "maximize", 0, 0 );
-  if (args_info->delay_given)
-    write_into_file(outfile, "delay", args_info->delay_orig, 0);
   if (args_info->live_given)
     write_into_file(outfile, "live", args_info->live_orig, 0);
   if (args_info->dead_given)
@@ -540,16 +540,16 @@ cmdline_parser_internal (
         { "detailed-help",	0, NULL, 0 },
         { "version",	0, NULL, 'V' },
         { "ruleint",	1, NULL, 'r' },
+        { "delay",	1, NULL, 'd' },
         { "width",	1, NULL, 'W' },
         { "height",	1, NULL, 'H' },
         { "maximize",	0, NULL, 'm' },
-        { "delay",	1, NULL, 'd' },
         { "live",	1, NULL, 'L' },
         { "dead",	1, NULL, 'D' },
         { 0,  0, 0, 0 }
       };
 
-      c = getopt_long (argc, argv, "hVr:W:H:md:L:D:", long_options, &option_index);
+      c = getopt_long (argc, argv, "hVr:d:W:H:mL:D:", long_options, &option_index);
 
       if (c == -1) break;	/* Exit from `while (1)' loop.  */
 
@@ -573,6 +573,18 @@ cmdline_parser_internal (
               &(local_args_info.ruleint_given), optarg, 0, "6152", ARG_INT,
               check_ambiguity, override, 0, 0,
               "ruleint", 'r',
+              additional_error))
+            goto failure;
+        
+          break;
+        case 'd':	/* Specify delay time.  */
+        
+        
+          if (update_arg( (void *)&(args_info->delay_arg), 
+               &(args_info->delay_orig), &(args_info->delay_given),
+              &(local_args_info.delay_given), optarg, 0, 0, ARG_INT,
+              check_ambiguity, override, 0, 0,
+              "delay", 'd',
               additional_error))
             goto failure;
         
@@ -609,18 +621,6 @@ cmdline_parser_internal (
               &(local_args_info.maximize_given), optarg, 0, 0, ARG_NO,
               check_ambiguity, override, 0, 0,
               "maximize", 'm',
-              additional_error))
-            goto failure;
-        
-          break;
-        case 'd':	/* Specify delay time.  */
-        
-        
-          if (update_arg( (void *)&(args_info->delay_arg), 
-               &(args_info->delay_orig), &(args_info->delay_given),
-              &(local_args_info.delay_given), optarg, 0, 0, ARG_INT,
-              check_ambiguity, override, 0, 0,
-              "delay", 'd',
               additional_error))
             goto failure;
         
