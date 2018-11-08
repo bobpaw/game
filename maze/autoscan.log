@@ -1,5 +1,0 @@
-autoscan: warning: missing AC_TYPE_SIZE_T wanted by: 
-	shuffle.h:14
-	shuffle.h:16
-	shuffle.h:21
-	shuffle.h:22

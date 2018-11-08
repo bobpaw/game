@@ -43,4 +43,3 @@ addons:
 script:
   - autoreconf -f -i && ./configure && make && make check
   - echo -n "q" | ./game > /dev/null
-  - echo -n "q" | maze/maze > /dev/null
