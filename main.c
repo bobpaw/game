@@ -41,39 +41,49 @@ int main (int argc, char * argv[]) {
   invent_item_count = calloc(item_count, sizeof(uint16_t));
   initscr();
   raw();
+  scrollok(stdscr, FALSE);
   curs_set(0);
   keypad(stdscr, TRUE);
   noecho();
   while (ch != 'q') {
-    erase();
-    if (ch == KEY_UP) {
+   // clear();
+    switch (ch) {
+    case KEY_UP:
       if (y > 0) y--;
-    } else if (ch == KEY_DOWN) {
+      break;
+    case KEY_DOWN:
       if (y < height - 1) y++;
-    } else if (ch == KEY_LEFT) {
+      break;
+    case KEY_LEFT:
       if (x > 0) x--;
-    } else if (ch == KEY_RIGHT) {
+      break;
+    case KEY_RIGHT:
       if (x < width - 1) x++;
-    } else if (ch == KEY_A1) {
+      break;
+    case KEY_A1:
       if (x > 0) x--;
       if (y > 0) y--;
-    } else if (ch == KEY_A3) {
+      break;
+    case KEY_A3:
       if (x < width - 1) x++;
       if (y > 0) y--;
-    } else if (ch == KEY_C1) {
+      break;
+    case KEY_C1:
       if (x > 0) x--;
       if (y < height - 1) y++;
-    } else if (ch == KEY_C3) {
+      break;
+    case KEY_C3:
       if (x < width - 1) x++;
       if (y < height - 1) y++;
+      break;
     }
-    memcpy(map, base_map, height * width);
-    map[y*width + x] = '@';
+    //memcpy(map, base_map, height * width);
     for (int i = 0; i < height; ++i) {
-      printw("%.*s\n", width, (map + (i * width)));
+      mvprintw(i, 0, "%.*s\n", width, (map + (i * width)));
     }
-    refresh();
+    mvaddch(y, x, '@');
     ch = getch();
+    refresh();
   }
   endwin();
   free(base_map);
