@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdint.h>
+#include <ctype.h>
 
 // Module Libraries
 #include <ncurses.h>

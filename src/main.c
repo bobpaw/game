@@ -63,106 +63,110 @@ int main (int argc, char * argv[]) {
 		move(y, x);
 		switch (ch) {
 		case KEY_UP:
+		case 'k':
 			if (y > 0 && base_map[y * width - width + x] == '.') y--;
 			me = '^';
+			ch = KEY_UP;
 			break;
 		case KEY_DOWN:
+		case 'j':
 			if (y < height - 1 && base_map[y * width + width + x] == '.') y++;
 			me = 'v';
+			ch = KEY_DOWN;
 			break;
 		case KEY_LEFT:
+		case 'h':
 			if (x > 0 && base_map[y * width + x - 1] == '.') x--;
 			me = '<';
+			ch = KEY_LEFT;
 			break;
 		case KEY_RIGHT:
+		case 'l':
 			if (x < width - 1 && base_map[y * width + x + 1] == '.') x++;
 			me = '>';
+			ch = KEY_RIGHT;
 			break;
 		case KEY_A1:
-			if (x > 0) x--;
-			if (y > 0) y--;
+		case 'y':
+			if (x > 0 && y > 0 && base_map[y * width - width + x - 1] == '.') {
+				--x;
+				--y;
+				echochar('\\');
+			} else if (x > 0 && base_map[y * width + x - 1] == '.') {
+				--x;
+				echochar(ACS_HLINE);
+			} else if (y > 0 && base_map[y * width - width + x] == '.') {
+				--y;
+				echochar(ACS_VLINE);
+			}
 			break;
 		case KEY_A3:
-			if (x < width - 1) x++;
-			if (y > 0) y--;
+		case 'u':
+			if (x < width - 1 && y > 0 && base_map[y * width - width + x + 1] == '.') {
+				--y;
+				++x;
+				echochar('/');
+			} else if (x < width - 1 && base_map[y * width + x + 1] == '.') {
+				++x;
+				echochar(ACS_HLINE);
+			} else if (y > 0 && base_map[y * width - width] == '.') {
+				y--;
+				echochar(ACS_VLINE);
+			}
 			break;
 		case KEY_C1:
-			if (x > 0) x--;
-			if (y < height - 1) y++;
+		case 'b':
+			if (x > 0 && y < height - 1 && base_map[y * width + width + x - 1] == '.') {
+				--x;
+				++y;
+				echochar('/');
+			} else if (x > 0 && base_map[y * width + x - 1] == '.') {
+				--x;
+				echochar(ACS_HLINE);
+			} else if (y < height - 1 && base_map[y * width + width + x] == '.') {
+				++y;
+				echochar(ACS_VLINE);
+			}
 			break;
 		case KEY_C3:
-			if (x < width - 1) x++;
-			if (y < height - 1) y++;
+		case 'n':
+			if (x < width - 1 && y < height - 1 && base_map[y * width + width + x + 1] == '.') {
+				++x;
+				++y;
+				echochar('\\');
+			} else if (x < width - 1 && base_map[y * width + x + 1] == '.') {
+				++x;
+				echochar(ACS_HLINE);
+			} else if (y < height - 1 && base_map[y * width + width + x] == '.') {
+				++y;
+				echochar(ACS_VLINE);
+			}
 			break;
 		}
-		switch (och) {
-		case KEY_UP:
-			switch (ch) {
-			case KEY_UP:
-			case KEY_DOWN:
+		switch (ch) {
+			case KEY_DOWN: // & 255 == 2
+			case KEY_UP: // & 255 == 3
+			case KEY_LEFT: // & 255 == 4
+			case KEY_RIGHT: // & 255 == 5
+			och &= 255;
+			ch &= 255;
+			if (och == ch) {
+				echochar((ch & 2) == 2 ? ACS_VLINE : ACS_HLINE);
+			} else if (och + ch == 5) {
 				echochar(ACS_VLINE);
-				break;
-			case KEY_RIGHT:
-				echochar(ACS_ULCORNER);
-				break;
-			case KEY_LEFT:
-				echochar(ACS_URCORNER);
-				break;
-			}
-			break;
-		case KEY_RIGHT:
-			switch (ch) {
-			case KEY_UP:
-				echochar(ACS_LRCORNER);
-				break;
-			case KEY_RIGHT:
-			case KEY_LEFT:
+			} else if (och + ch == 9) {
 				echochar(ACS_HLINE);
-				break;
-			case KEY_DOWN:
-				echochar(ACS_URCORNER);
-				break;
+			} else if (och + ch == 7) {
+				echochar((och == 3 || och == 4) != ((ch & 2) == 2) ? ACS_URCORNER : ACS_LLCORNER);
+			} else {
+				echochar((och + ch == 8) != ((ch & 2) == 2) ? ACS_ULCORNER : ACS_LRCORNER);
 			}
-			break;
-		case KEY_LEFT:
-			switch (ch) {
-			case KEY_UP:
-				echochar(ACS_LLCORNER);
-				break;
-			case KEY_RIGHT:
-			case KEY_LEFT:
-				echochar(ACS_HLINE);
-				break;
-			case KEY_DOWN:
-				echochar(ACS_ULCORNER);
-				break;
-			}
-			break;
-		case KEY_DOWN:
-			switch (ch) {
-			case KEY_RIGHT:
-				echochar(ACS_LLCORNER);
-				break;
-			case KEY_LEFT:
-				echochar(ACS_LRCORNER);
-				break;
-			case KEY_DOWN:
-			case KEY_UP:
-				echochar(ACS_VLINE);
-				break;
-			}
-			break;
+			ch |= 256;
+			och = ch;
 		}
 		move(y, x);
 		echochar(me);
-		switch (ch) {
-		case KEY_UP:
-		case KEY_RIGHT:
-		case KEY_LEFT:
-		case KEY_DOWN:
-			och = ch;
-		}
-		ch = getch();
+		ch = tolower(getch());
 		refresh();
 	}
 	endwin();
