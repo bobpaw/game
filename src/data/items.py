@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
+
 import json
+import sys
 
 item_count = 0
 
@@ -55,3 +58,7 @@ def gen_h_file(itemlist, f):
 	print("", file=f)
 	print("const uint16_t item_count = " + str(len(itemlist)) + ";", file=f)
 	print("#endif // GAME_ITEMLIST_H_", file=f)
+
+if '--build' in sys.argv:
+	with open('itemlist.h', 'w') as f:
+		gen_h_file(itemlist, f)

@@ -11,7 +11,7 @@
 
 // Project libraries
 #include "config.h"
-#include "data/item.h"
-#include "data/monster.h"
-#include "data/player.h"
-#include "data/itemlist.h"
+#include <item.h>
+#include <monster.h>
+#include <player.h>
+#include <data/itemlist.h>
