@@ -19,7 +19,7 @@
 
 int main (int argc, char * argv[]) {
 	srand(clock());
-	int invent_used = 0;
+	int invent_used = 'n' - 'a';
 	int ch = 0, och = 0;
 	int width = 36;
 	int height = 18;
@@ -46,13 +46,13 @@ int main (int argc, char * argv[]) {
 	map = malloc(height * width + 1);
 	map[height * width] = 0;
 	memcpy(map, base_map, height * width);
-	for (int i = 'a', r = 0; i < 'n';) {
+	for (int i = 'a', r = 0; i < 'a' + invent_used;) {
 		r = rand() % (height * width);
 		if (map[r] == '.') map[r] = i++;
 	}
 	int x = 3;
 	int y = 3;
-	int drills = 3;
+	int drill = 3;
 	int * invent_item_count = NULL;
 	char me = '@';
 	invent_item_count = calloc(item_count, sizeof(uint16_t));
@@ -64,6 +64,8 @@ int main (int argc, char * argv[]) {
 	noecho();
 	for (int i = 0; i < height; ++i)
 		mvprintw(i, 0, "%.*s", width, (map + (i * width)));
+	mvprintw(0, width + 1, "Drills: %d", drill);
+	refresh();
 	while (ch != 'q') {
 		move(y, x);
 		switch (ch) {
@@ -149,7 +151,40 @@ int main (int argc, char * argv[]) {
 			break;
 		case 'd':
 			if (drill > 0) {
-				// drill a hole, based off och
+				switch (och) {
+					case KEY_LEFT:
+						if (base_map[y * width + x - 1] == '#') {
+							base_map[y * width + x - 1] = '.';
+							move(y, x - 1); echochar('.');
+							--drill;
+							move(0, width + 1 + 8); // 8 is length of 'Drills: '
+							echochar(drill + '0');
+						} break;
+					case KEY_RIGHT:
+						if (base_map[y * width + x + 1] == '#') {
+							base_map[y * width + x + 1] = '.';
+							move(y, x + 1); echochar('.');
+							--drill;
+							move(0, width + 1 + 8); // 8 is length of 'Drills: '
+							echochar(drill + '0');
+						} break;
+					case KEY_UP:
+						if (base_map[y * width - width + x] == '#') {
+							base_map[y * width - width + x] = '.';
+							move(y - 1, x); echochar('.');
+							--drill;
+							move(0, width + 1 + 8); // 8 is length of 'Drills: '
+							echochar(drill + '0');
+						} break;
+					case KEY_DOWN:
+						if (base_map[y * width + width + x] == '#') {
+							base_map[y * width + width + x] = '.';
+							move(y + 1, x); echochar('.');
+							--drill;
+							move(0, width + 1 + 8); // 8 is length of 'Drills: '
+							echochar(drill + '0');
+						} break;
+					}
 			}
 		}
 		switch (ch) {
@@ -176,12 +211,16 @@ int main (int argc, char * argv[]) {
 		move(y, x);
 		echochar(me);
 		if (map[width * y + x] != '.') {
-			move(height, map[width * y + x]- 'a');
+			move(height, map[width * y + x] - 'a');
 			echochar(map[width * y + x]);
 			map[width * y + x] = '.';
+			--invent_used;
+		}
+		if (invent_used == 0) {
+			mvaddstr(height + 1, 0, "Done!");
+			refresh();
 		}
 		ch = tolower(getch());
-		refresh();
 	}
 	endwin();
 	free(base_map);
