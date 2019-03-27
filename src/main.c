@@ -46,8 +46,13 @@ int main (int argc, char * argv[]) {
 	map = malloc(height * width + 1);
 	map[height * width] = 0;
 	memcpy(map, base_map, height * width);
+	for (int i = 'a', r = 0; i < 'n';) {
+		r = rand() % (height * width);
+		if (map[r] == '.') map[r] = i++;
+	}
 	int x = 3;
 	int y = 3;
+	int drills = 3;
 	int * invent_item_count = NULL;
 	char me = '@';
 	invent_item_count = calloc(item_count, sizeof(uint16_t));
@@ -142,6 +147,10 @@ int main (int argc, char * argv[]) {
 				echochar(ACS_VLINE);
 			}
 			break;
+		case 'd':
+			if (drill > 0) {
+				// drill a hole, based off och
+			}
 		}
 		switch (ch) {
 			case KEY_DOWN: // & 255 == 2
@@ -166,6 +175,11 @@ int main (int argc, char * argv[]) {
 		}
 		move(y, x);
 		echochar(me);
+		if (map[width * y + x] != '.') {
+			move(height, map[width * y + x]- 'a');
+			echochar(map[width * y + x]);
+			map[width * y + x] = '.';
+		}
 		ch = tolower(getch());
 		refresh();
 	}
