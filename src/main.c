@@ -1,6 +1,6 @@
 /*
 	A simple 2D RPG using ncurses
-	Copyright (C) 2018 Aiden Woodruff
+	Copyright (C) 2019 Aiden Woodruff
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,8 @@
 
 int main (int argc, char * argv[]) {
 	srand(clock());
-	int invent_used = 'n' - 'a';
+	char max_letter = argc == 2 ? argv[1][0] : 'm';
+	int invent_used = max_letter + 1 - 'a';
 	int ch = 0, och = 0;
 	int width = 36;
 	int height = 18;
@@ -46,7 +47,7 @@ int main (int argc, char * argv[]) {
 	map = malloc(height * width + 1);
 	map[height * width] = 0;
 	memcpy(map, base_map, height * width);
-	for (int i = 'a', r = 0; i < 'a' + invent_used;) {
+	for (int i = 'a', r = 0; i < max_letter + 1;) {
 		r = rand() % (height * width);
 		if (map[r] == '.') map[r] = i++;
 	}
@@ -210,7 +211,7 @@ int main (int argc, char * argv[]) {
 		}
 		move(y, x);
 		echochar(me);
-		if (map[width * y + x] != '.') {
+		if (map[width * y + x] >= 'a' && map[width * y + x] <= max_letter) {
 			move(height, map[width * y + x] - 'a');
 			echochar(map[width * y + x]);
 			map[width * y + x] = '.';
