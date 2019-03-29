@@ -1,3 +1,5 @@
+#include "config.h"
+
 // C standard libraries
 #include <stdlib.h>
 #include <string.h>
@@ -7,10 +9,13 @@
 #include <ctype.h>
 
 // Module Libraries
+#ifdef HAVE_CURSESW
+#include <ncursesw/ncurses.h>
+#else
 #include <ncurses.h>
+#endif
 
 // Project libraries
-#include "config.h"
 #include <item.h>
 #include <monster.h>
 #include <player.h>

@@ -54,9 +54,8 @@ int main (int argc, char * argv[]) {
 	int x = 3;
 	int y = 3;
 	int drill = 3;
-	int * invent_item_count = NULL;
-	char me = '@';
-	invent_item_count = calloc(item_count, sizeof(uint16_t));
+	char * invent = calloc(invent_used, sizeof(char));
+	int me = '@';
 	initscr();
 	raw();
 	scrollok(stdscr, FALSE);
@@ -73,25 +72,25 @@ int main (int argc, char * argv[]) {
 		case KEY_UP:
 		case 'k':
 			if (y > 0 && base_map[y * width - width + x] == '.') y--;
-			me = '^';
+			me = ACS_UARROW;
 			ch = KEY_UP;
 			break;
 		case KEY_DOWN:
 		case 'j':
 			if (y < height - 1 && base_map[y * width + width + x] == '.') y++;
-			me = 'v';
+			me = ACS_DARROW;
 			ch = KEY_DOWN;
 			break;
 		case KEY_LEFT:
 		case 'h':
 			if (x > 0 && base_map[y * width + x - 1] == '.') x--;
-			me = '<';
+			me = ACS_LARROW;
 			ch = KEY_LEFT;
 			break;
 		case KEY_RIGHT:
 		case 'l':
 			if (x < width - 1 && base_map[y * width + x + 1] == '.') x++;
-			me = '>';
+			me = ACS_RARROW;
 			ch = KEY_RIGHT;
 			break;
 		case KEY_A1:
@@ -153,40 +152,48 @@ int main (int argc, char * argv[]) {
 		case 'd':
 			if (drill > 0) {
 				switch (och) {
-					case KEY_LEFT:
-						if (base_map[y * width + x - 1] == '#') {
-							base_map[y * width + x - 1] = '.';
-							move(y, x - 1); echochar('.');
-							--drill;
-							move(0, width + 1 + 8); // 8 is length of 'Drills: '
-							echochar(drill + '0');
-						} break;
-					case KEY_RIGHT:
-						if (base_map[y * width + x + 1] == '#') {
-							base_map[y * width + x + 1] = '.';
-							move(y, x + 1); echochar('.');
-							--drill;
-							move(0, width + 1 + 8); // 8 is length of 'Drills: '
-							echochar(drill + '0');
-						} break;
-					case KEY_UP:
-						if (base_map[y * width - width + x] == '#') {
-							base_map[y * width - width + x] = '.';
-							move(y - 1, x); echochar('.');
-							--drill;
-							move(0, width + 1 + 8); // 8 is length of 'Drills: '
-							echochar(drill + '0');
-						} break;
-					case KEY_DOWN:
-						if (base_map[y * width + width + x] == '#') {
-							base_map[y * width + width + x] = '.';
-							move(y + 1, x); echochar('.');
-							--drill;
-							move(0, width + 1 + 8); // 8 is length of 'Drills: '
-							echochar(drill + '0');
-						} break;
-					}
+				case KEY_LEFT:
+					if (base_map[y * width + x - 1] == '#') {
+						base_map[y * width + x - 1] = map[y * width + x - 1] = '.';
+						move(y, x - 1); echochar('.');
+						--drill;
+						move(0, width + 1 + 8); // 8 is length of 'Drills: '
+						echochar(drill + '0');
+					} break;
+				case KEY_RIGHT:
+					if (base_map[y * width + x + 1] == '#') {
+						base_map[y * width + x + 1] =map[y * width + x + 1] = '.';
+						move(y, x + 1); echochar('.');
+						--drill;
+						move(0, width + 1 + 8); // 8 is length of 'Drills: '
+						echochar(drill + '0');
+					} break;
+				case KEY_UP:
+					if (base_map[y * width - width + x] == '#') {
+						base_map[y * width - width + x] = map[y * width - width + x] = '.';
+						move(y - 1, x); echochar('.');
+						--drill;
+						move(0, width + 1 + 8); // 8 is length of 'Drills: '
+						echochar(drill + '0');
+					} break;
+				case KEY_DOWN:
+					if (base_map[y * width + width + x] == '#') {
+						base_map[y * width + width + x] = map[y * width + width + x] = '.';
+						move(y + 1, x); echochar('.');
+						--drill;
+						move(0, width + 1 + 8); // 8 is length of 'Drills: '
+						echochar(drill + '0');
+					} break;
+				}
 			}
+			break;
+			case 'c':
+				for (int i = 0; i < height; ++i)
+					mvprintw(i, 0, "%.*s", width, (map + (i * width)));
+				mvprintw(0, width + 1, "Drills: %d", drill);
+				for (int i = 0; i < max_letter - 'a'; ++i)
+					mvaddch(height, i, invent[i] != 0 ? invent[i] : ' ');
+				refresh();
 		}
 		switch (ch) {
 			case KEY_DOWN: // & 255 == 2
@@ -214,6 +221,7 @@ int main (int argc, char * argv[]) {
 		if (map[width * y + x] >= 'a' && map[width * y + x] <= max_letter) {
 			move(height, map[width * y + x] - 'a');
 			echochar(map[width * y + x]);
+			invent[map[width * y + x] - 'a'] = map[width * y + x];
 			map[width * y + x] = '.';
 			--invent_used;
 		}
@@ -226,6 +234,6 @@ int main (int argc, char * argv[]) {
 	endwin();
 	free(base_map);
 	free(map);
-	free(invent_item_count);
+	free(invent);
 	exit(EXIT_SUCCESS);
 }

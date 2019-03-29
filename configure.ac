@@ -14,7 +14,9 @@ AC_PROG_CC_C99
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lncurses':
-AC_CHECK_LIB([ncurses], [refresh], [], [AC_MSG_ERROR([ncurses not found])])
+AC_CHECK_LIB([ncursesw], [refresh], [], [
+	AC_CHECK_LIB([ncurses], [refresh], [], [AC_MSG_ERROR([ncurses not found])])
+])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h string.h unistd.h string.h])
