@@ -1,3 +1,7 @@
 \#*#
 *~
 __pycache__/*
+.deps/
+autom4te.cache/
+*.o
+
