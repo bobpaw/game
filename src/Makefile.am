@@ -1,6 +1,8 @@
 AUTOMAKE_OPTIONS = gnu
 bin_PROGRAMS = game
-game_SOURCES = main.c main.h item.h monster.h player.h data/itemlist.h
+game_SOURCES = main.cc main.h item.h monster.h player.h data/itemlist.h
+game_LDADD = $(CURSES_LIBS)
+game_CXXFLAGS = $(CURSES_CFLAGS)
 EXTRA_DIST = data/items.json data/items.py
 game_CPPFLAGS = -Wall -Wextra -pedantic
 

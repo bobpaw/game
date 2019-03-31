@@ -18,17 +18,17 @@
 #include "main.h"
 
 int main (int argc, char * argv[]) {
-	srand(clock());
+	auto random = [engine = std::default_random_engine(std::random_device()()), distribution = std::uniform_int_distribution<int>(0)] (void) mutable {
+		return distribution(engine); };
 	char max_letter = argc == 2 ? argv[1][0] : 'm';
 	int invent_used = max_letter + 1 - 'a';
 	int ch = 0, och = 0;
 	int width = 36;
 	int height = 18;
-	char * base_map = NULL;
-	base_map = malloc(height * width + 1);
-	if (base_map == NULL) {
-		fprintf(stderr, "Ran out of memory\n");
-		exit(EXIT_FAILURE);
+	char * base_map = new char[height * width + 1]();
+	if (base_map == nullptr) {
+		std::cerr << "Ran out of memory" << std::endl;
+		return -1;
 	}
 	base_map[height * width] = 0;
 	int chance = 40, uchance = 5, dchance = -10;
@@ -43,18 +43,16 @@ int main (int argc, char * argv[]) {
 				base_map[y * width + x] = '#';
 			else base_map[y * width + x] = '.';
 		}
-	char * map = NULL;
-	map = malloc(height * width + 1);
-	map[height * width] = 0;
-	memcpy(map, base_map, height * width);
+	char * map = new char[height * width + 1]();
+	for (int i = 0; i < height * width; ++i) map[i] = base_map[i];
 	for (int i = 'a', r = 0; i < max_letter + 1;) {
-		r = rand() % (height * width);
+		r = random() % (height * width);
 		if (map[r] == '.') map[r] = i++;
 	}
 	int x = 3;
 	int y = 3;
 	int drill = 3;
-	char * invent = calloc(invent_used, sizeof(char));
+	char * invent = new char[invent_used]();
 	int me = '@';
 	initscr();
 	raw();
@@ -232,8 +230,8 @@ int main (int argc, char * argv[]) {
 		ch = tolower(getch());
 	}
 	endwin();
-	free(base_map);
-	free(map);
-	free(invent);
+	delete[] base_map;
+	delete[] map;
+	delete[] invent;
 	exit(EXIT_SUCCESS);
 }

@@ -1,12 +1,11 @@
 #include "config.h"
 
-// C standard libraries
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <time.h>
-#include <stdint.h>
-#include <ctype.h>
+// C++ standard libraries
+#include <string>
+#include <cstdint>
+#include <cctype>
+#include <random>
+#include <iostream>
 
 // Module Libraries
 #ifdef HAVE_CURSESW
