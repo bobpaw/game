@@ -18,6 +18,15 @@
 /* Define to 1 if library supports certain obsolete features */
 #undef HAVE_CURSES_OBSOLETE
 
+/* define if the compiler supports basic C++11 syntax */
+#undef HAVE_CXX11
+
+/* define if the compiler supports basic C++14 syntax */
+#undef HAVE_CXX14
+
+/* Define to 1 if you have the <functional> header file. */
+#undef HAVE_FUNCTIONAL
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
@@ -44,6 +53,9 @@
 
 /* Define to 1 if <ncurses.h> is present */
 #undef HAVE_NCURSES_H
+
+/* Define to 1 if you have the <random> header file. */
+#undef HAVE_RANDOM
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H

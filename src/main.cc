@@ -17,40 +17,33 @@
 */
 #include "main.h"
 
+#ifndef CTRL
+#define CTRL(x) ((x) & 037)
+#endif
+
 int main (int argc, char * argv[]) {
-	auto random = [engine = std::default_random_engine(std::random_device()()), distribution = std::uniform_int_distribution<int>(0)] (void) mutable {
-		return distribution(engine); };
 	char max_letter = argc == 2 ? argv[1][0] : 'm';
 	int invent_used = max_letter + 1 - 'a';
 	int ch = 0, och = 0;
-	int width = 36;
-	int height = 18;
-	char * base_map = new char[height * width + 1]();
-	if (base_map == nullptr) {
-		std::cerr << "Ran out of memory" << std::endl;
-		return -1;
-	}
-	base_map[height * width] = 0;
+	int width = 36, height = 18;
 	int chance = 40, uchance = 5, dchance = -10;
-	for (int y = 0; y < height; ++y)
-		for (int x = 0; x < width; ++x) {
-			// Default chance is 40 for a wall
-			// Increases if the nearest are also walls
-			// Meaning: better chance for large chunks of wall
-			if (rand() % 100 < chance +
-			(x > 0 && base_map[y * width + x - 1] == '#' ? uchance : dchance) +
-			(y > 0 && base_map[y * width - width + x] == '#' ? uchance : dchance))
-				base_map[y * width + x] = '#';
-			else base_map[y * width + x] = '.';
-		}
-	char * map = new char[height * width + 1]();
-	for (int i = 0; i < height * width; ++i) map[i] = base_map[i];
+
+	// Default chance is 40 for a wall
+	// Increases if the nearest are also walls
+	// Meaning: better chance for large chunks of wall
+	game::Application app(width, height, [chance, uchance, dchance](game::game_map* her, int x, int y, int rnd) {
+		return (rnd % 100 < chance +
+		(her->in_range(x - 1, y) && her->operator()(x - 1, y) == '#' ? uchance : dchance) +
+		(her->in_range(x, y - 1) && her->operator()(x, y - 1) == '#' ? uchance : dchance)) ?
+		'#' : '.';
+	});
+
+	auto engine = std::default_random_engine(std::random_device()());
+	auto distribution = std::uniform_int_distribution<int>(0);
 	for (int i = 'a', r = 0; i < max_letter + 1;) {
-		r = random() % (height * width);
-		if (map[r] == '.') map[r] = i++;
+		r = distribution(engine) % (app.height() * app.width());
+		if (app[r] == '.') app[r] = i++;
 	}
-	int x = 3;
-	int y = 3;
 	int drill = 3;
 	char * invent = new char[invent_used]();
 	int me = '@';
@@ -60,137 +53,144 @@ int main (int argc, char * argv[]) {
 	curs_set(0);
 	keypad(stdscr, TRUE);
 	noecho();
-	for (int i = 0; i < height; ++i)
-		mvprintw(i, 0, "%.*s", width, (map + (i * width)));
-	mvprintw(0, width + 1, "Drills: %d", drill);
+	for (int y = 0; y < app.height(); ++y)
+		for (int x = 0; x < app.width(); ++x)
+		mvaddch(y, x, app(x, y));
+	mvprintw(0, app.width() + 1, "Drills: %d", drill);
 	refresh();
-	while (ch != 'q') {
-		move(y, x);
+	// int x = 3, y = 3;
+	while (ch != 'q' && ch != CTRL('c')) {
+		move(app.y, app.x);
 		switch (ch) {
 		case KEY_UP:
 		case 'k':
-			if (y > 0 && base_map[y * width - width + x] == '.') y--;
+			app.move(app.N);
 			me = ACS_UARROW;
 			ch = KEY_UP;
 			break;
 		case KEY_DOWN:
 		case 'j':
-			if (y < height - 1 && base_map[y * width + width + x] == '.') y++;
+			app.move(app.S);
 			me = ACS_DARROW;
 			ch = KEY_DOWN;
 			break;
 		case KEY_LEFT:
 		case 'h':
-			if (x > 0 && base_map[y * width + x - 1] == '.') x--;
+			app.move(app.W);
 			me = ACS_LARROW;
 			ch = KEY_LEFT;
 			break;
 		case KEY_RIGHT:
 		case 'l':
-			if (x < width - 1 && base_map[y * width + x + 1] == '.') x++;
+			app.move(app.E);
 			me = ACS_RARROW;
 			ch = KEY_RIGHT;
 			break;
 		case KEY_A1:
 		case 'y':
-			if (x > 0 && y > 0 && base_map[y * width - width + x - 1] == '.') {
-				--x;
-				--y;
+			switch (app.move(app.NW)) {
+			case app.NW:
 				echochar('\\');
-			} else if (x > 0 && base_map[y * width + x - 1] == '.') {
-				--x;
-				echochar(ACS_HLINE);
-			} else if (y > 0 && base_map[y * width - width + x] == '.') {
-				--y;
+				break;
+			case app.N:
 				echochar(ACS_VLINE);
+				break;
+			case app.W:
+				echochar(ACS_HLINE);
+				break;
+			default:;
 			}
 			break;
 		case KEY_A3:
 		case 'u':
-			if (x < width - 1 && y > 0 && base_map[y * width - width + x + 1] == '.') {
-				--y;
-				++x;
+		switch (app.move(app.NE)) {
+			case app.NE:
 				echochar('/');
-			} else if (x < width - 1 && base_map[y * width + x + 1] == '.') {
-				++x;
-				echochar(ACS_HLINE);
-			} else if (y > 0 && base_map[y * width - width] == '.') {
-				y--;
+				break;
+			case app.N:
 				echochar(ACS_VLINE);
+				break;
+			case app.E:
+				echochar(ACS_HLINE);
+				break;
+			default:;
 			}
 			break;
 		case KEY_C1:
 		case 'b':
-			if (x > 0 && y < height - 1 && base_map[y * width + width + x - 1] == '.') {
-				--x;
-				++y;
+			switch (app.move(app.SW)) {
+			case app.SW:
 				echochar('/');
-			} else if (x > 0 && base_map[y * width + x - 1] == '.') {
-				--x;
-				echochar(ACS_HLINE);
-			} else if (y < height - 1 && base_map[y * width + width + x] == '.') {
-				++y;
+				break;
+			case app.S:
 				echochar(ACS_VLINE);
+				break;
+			case app.W:
+				echochar(ACS_HLINE);
+				break;
+			default:;
 			}
 			break;
 		case KEY_C3:
 		case 'n':
-			if (x < width - 1 && y < height - 1 && base_map[y * width + width + x + 1] == '.') {
-				++x;
-				++y;
+			switch (app.move(app.SE)) {
+			case app.SE:
 				echochar('\\');
-			} else if (x < width - 1 && base_map[y * width + x + 1] == '.') {
-				++x;
-				echochar(ACS_HLINE);
-			} else if (y < height - 1 && base_map[y * width + width + x] == '.') {
-				++y;
+				break;
+			case app.S:
 				echochar(ACS_VLINE);
+				break;
+			case app.E:
+				echochar(ACS_HLINE);
+				break;
+			default:;
 			}
 			break;
 		case 'd':
 			if (drill > 0) {
 				switch (och) {
 				case KEY_LEFT:
-					if (base_map[y * width + x - 1] == '#') {
-						base_map[y * width + x - 1] = map[y * width + x - 1] = '.';
-						move(y, x - 1); echochar('.');
+					if (!app.is_clear(app.W)) {
+						app.in_direction(app.W) = '.';
+						move(app.y, app.x - 1); echochar('.');
 						--drill;
-						move(0, width + 1 + 8); // 8 is length of 'Drills: '
+						move(0, app.width() + 1 + 8); // 8 is length of 'Drills: '
 						echochar(drill + '0');
 					} break;
 				case KEY_RIGHT:
-					if (base_map[y * width + x + 1] == '#') {
-						base_map[y * width + x + 1] =map[y * width + x + 1] = '.';
-						move(y, x + 1); echochar('.');
+					if (!app.is_clear(app.E)) {
+						app.in_direction(app.E) = '.';
+						move(app.y, app.x + 1); echochar('.');
 						--drill;
-						move(0, width + 1 + 8); // 8 is length of 'Drills: '
+						move(0, app.width() + 1 + 8); // 8 is length of 'Drills: '
 						echochar(drill + '0');
 					} break;
 				case KEY_UP:
-					if (base_map[y * width - width + x] == '#') {
-						base_map[y * width - width + x] = map[y * width - width + x] = '.';
-						move(y - 1, x); echochar('.');
+					if (!app.is_clear(app.N)) {
+						app.in_direction(app.N) = '.';
+						move(app.y - 1, app.x); echochar('.');
 						--drill;
-						move(0, width + 1 + 8); // 8 is length of 'Drills: '
+						move(0, app.width() + 1 + 8); // 8 is length of 'Drills: '
 						echochar(drill + '0');
 					} break;
 				case KEY_DOWN:
-					if (base_map[y * width + width + x] == '#') {
-						base_map[y * width + width + x] = map[y * width + width + x] = '.';
-						move(y + 1, x); echochar('.');
+					if (!app.is_clear(app.S)) {
+						app.in_direction(app.S) = '.';
+						move(app.y + 1, app.x); echochar('.');
 						--drill;
-						move(0, width + 1 + 8); // 8 is length of 'Drills: '
+						move(0, app.width() + 1 + 8); // 8 is length of 'Drills: '
 						echochar(drill + '0');
 					} break;
 				}
 			}
 			break;
 			case 'c':
-				for (int i = 0; i < height; ++i)
-					mvprintw(i, 0, "%.*s", width, (map + (i * width)));
-				mvprintw(0, width + 1, "Drills: %d", drill);
+				for (int y = 0; y < app.height(); ++y)
+					for (int x = 0; x < app.width(); ++x)
+						mvaddch(y, x, app(x, y));
+				mvprintw(0, app.width() + 1, "Drills: %d", drill);
 				for (int i = 0; i < max_letter - 'a'; ++i)
-					mvaddch(height, i, invent[i] != 0 ? invent[i] : ' ');
+					mvaddch(app.height(), i, invent[i] != 0 ? invent[i] : ' ');
 				refresh();
 		}
 		switch (ch) {
@@ -214,24 +214,23 @@ int main (int argc, char * argv[]) {
 			ch |= 256;
 			och = ch;
 		}
-		move(y, x);
+		move(app.y, app.x);
 		echochar(me);
-		if (map[width * y + x] >= 'a' && map[width * y + x] <= max_letter) {
-			move(height, map[width * y + x] - 'a');
-			echochar(map[width * y + x]);
-			invent[map[width * y + x] - 'a'] = map[width * y + x];
-			map[width * y + x] = '.';
+		if (app.here() >= 'a' && app.here() <= max_letter) {
+			int letter = app.here();
+			move(app.height(), letter - 'a');
+			echochar(letter);
+			invent[letter - 'a'] = letter;
+			app.here() = '.';
 			--invent_used;
 		}
 		if (invent_used == 0) {
-			mvaddstr(height + 1, 0, "Done!");
+			mvaddstr(app.height() + 1, 0, "Done!");
 			refresh();
 		}
 		ch = tolower(getch());
 	}
 	endwin();
-	delete[] base_map;
-	delete[] map;
 	delete[] invent;
 	exit(EXIT_SUCCESS);
 }

@@ -12,13 +12,17 @@ AC_LANG([C++])
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CXXCPP
+AX_CXX_COMPILE_STDCXX([14], [noext], [optional])
+if [ $HAVE_CXX14 -eq 0 ]; then
+AX_CXX_COMPILE_STDCXX([11], [noext], [mandatory])
+fi
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lncurses':
 AX_WITH_CURSES
 
 # Checks for header files.
-AC_CHECK_HEADERS([string cstdint iostream])
+AC_CHECK_HEADERS([string cstdint iostream functional random])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_UINT8_T

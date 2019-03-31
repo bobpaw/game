@@ -1,7 +1,7 @@
 #include "config.h"
 
 // C++ standard libraries
-#include <string>
+// #include <string>
 #include <cstdint>
 #include <cctype>
 #include <random>
@@ -16,6 +16,8 @@
 
 // Project libraries
 #include <item.h>
+#include <data/itemlist.h>
 #include <monster.h>
 #include <player.h>
-#include <data/itemlist.h>
+#include <app.h>
+#include <game_map.h>
