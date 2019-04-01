@@ -1,6 +1,7 @@
 #include <functional> // std::function
 #include <random> // std::random_device, std::default_random_engine, etc.
 #include <stdexcept> // std::runtime_error, std::out_of_range
+#include <type_traits>
 
 #ifndef GAME_GAME_MAP_H_
 #define GAME_GAME_MAP_H_
@@ -54,17 +55,26 @@ namespace game {
 		~game_map () { delete[] map; }
 
 		// Access
+#ifdef HAVE_CXX14
 		auto width () const noexcept { return w; }
 		auto height () const noexcept { return h; }
+#else
+		decltype(w) width () const noexcept { return w; }
+		decltype(h) height () const noexcept { return h; }
+#endif
 
-		char operator[] (int n) const { return map[n]; }
-		char &operator[] (int n) { return map[n]; }
+		std::remove_pointer<decltype(map)>::type
+		operator[] (int n) const { return map[n]; }
+		std::add_lvalue_reference<std::remove_pointer<decltype(map)>::type>::type
+		operator[] (int n) { return map[n]; }
 
-		char operator() (int x, int y) const {
+		std::remove_pointer<decltype(map)>::type
+		operator() (int x, int y) const {
 			if (in_range(x, y)) return map[w * y + x];
 			else throw std::out_of_range("base_map::operator() out of range");
 		}
-		char &operator() (int x, int y) {
+		std::add_lvalue_reference<std::remove_pointer<decltype(map)>::type>::type
+		operator() (int x, int y) {
 			if (in_range(x, y)) return map[w * y + x];
 			else throw std::out_of_range("base_map::operator() out of range");
 		}
