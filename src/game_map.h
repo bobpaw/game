@@ -40,6 +40,7 @@ namespace game {
 			map = new char[h * w + 1]();
 			if (map == nullptr) throw std::runtime_error("game_map copy assignment: Out of memory");
 			for (int i = 0; i < h * w; ++i) map[i] = old.map[i];
+			return *this;
 		}
 
 		game_map (game_map &&old): w(old.w), h(old.h), map(old.map) {}
