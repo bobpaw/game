@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <functional> // std::function
 #include <random> // std::random_device, std::default_random_engine, etc.
 #include <stdexcept> // std::runtime_error, std::out_of_range

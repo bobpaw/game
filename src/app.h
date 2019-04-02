@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <functional> // std::function
 
 #include "game_map.h"
@@ -16,8 +20,13 @@ namespace game {
 
 		Application (int width, int height, std::function<char(game_map*, int, int, int)> a = nullptr): map(width, height, a), x(3), y(3) {}
 
+#ifdef HAVE_CXX14
 		auto width () const noexcept { return map.width(); }
 		auto height () const noexcept { return map.height(); }
+#else
+		auto width () const noexcept -> decltype(map.width()) { return map.width(); }
+		auto height () const noexcept -> decltype(map.width()) { return map.height(); }
+#endif
 
 		chartype &operator() (int x, int y) { return map(x, y); }
 		chartype operator() (int x, int y) const { return map(x, y); }
