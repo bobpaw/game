@@ -8,16 +8,18 @@
 
 namespace game {
 	class game_map {
+	public:
+		using chartype = char;
+
 	private:
 		int w;
 		int h;
-		char *map;
+		chartype *map;
 
 	public:
-
 		// Constructors, Destructors, Copy/Move
-		game_map (int width, int height, std::function<char(game_map*, int, int, int)> setter): w(width), h(height) {
-			map = new char[height * width + 1]();
+		game_map (int width, int height, std::function<chartype(game_map*, int, int, int)> setter): w(width), h(height) {
+			map = new chartype[height * width + 1]();
 			if (map == nullptr) throw std::runtime_error("game_map::game_map() Out of memory");
 			if (setter) {
 				auto engine = std::default_random_engine(std::random_device()());
@@ -31,14 +33,14 @@ namespace game {
 		game_map (int width, int height): game_map(width, height, nullptr) {}
 
 		game_map (const game_map &old): w(old.w), h(old.h) {
-			map = new char[old.h * old.w + 1]();
+			map = new chartype[old.h * old.w + 1]();
 			if (map == nullptr) throw std::runtime_error("game_map::game_map() Out of memory");
 			for (int i = 0; i < old.h * old.w; ++i) map[i] = old.map[i];
 		}
 		game_map& operator= (const game_map &old) {
 			w = old.w;
 			h = old.h;
-			map = new char[h * w + 1]();
+			map = new chartype[h * w + 1]();
 			if (map == nullptr) throw std::runtime_error("game_map copy assignment: Out of memory");
 			for (int i = 0; i < h * w; ++i) map[i] = old.map[i];
 			return *this;
@@ -63,18 +65,14 @@ namespace game {
 		decltype(h) height () const noexcept { return h; }
 #endif
 
-		std::remove_pointer<decltype(map)>::type
-		operator[] (int n) const { return map[n]; }
-		std::add_lvalue_reference<std::remove_pointer<decltype(map)>::type>::type
-		operator[] (int n) { return map[n]; }
+		chartype operator[] (int n) const { return map[n]; }
+		chartype &operator[] (int n) { return map[n]; }
 
-		std::remove_pointer<decltype(map)>::type
-		operator() (int x, int y) const {
+		chartype operator() (int x, int y) const {
 			if (in_range(x, y)) return map[w * y + x];
 			else throw std::out_of_range("base_map::operator() out of range");
 		}
-		std::add_lvalue_reference<std::remove_pointer<decltype(map)>::type>::type
-		operator() (int x, int y) {
+		chartype &operator() (int x, int y) {
 			if (in_range(x, y)) return map[w * y + x];
 			else throw std::out_of_range("base_map::operator() out of range");
 		}
