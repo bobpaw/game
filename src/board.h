@@ -34,6 +34,13 @@ namespace game {
 			}
 		}
 
+		// Fill with character
+		board (int width, int height, chartype f): w(width), h(height) {
+			map = new chartype[height * width + 1]();
+			if (map == nullptr) throw std::runtime_error("board::board() Out of memory");
+			for (int i = 0; i < width * height; ++i) map[i] = f;
+		}
+
 		board (int width, int height): board(width, height, nullptr) {}
 
 		board (const board &old): w(old.w), h(old.h) {
@@ -44,21 +51,24 @@ namespace game {
 		board& operator= (const board &old) {
 			w = old.w;
 			h = old.h;
+			if (map != nullptr) delete[] map;
 			map = new chartype[h * w + 1]();
 			if (map == nullptr) throw std::runtime_error("board copy assignment: Out of memory");
 			for (int i = 0; i < h * w; ++i) map[i] = old.map[i];
 			return *this;
 		}
 
-		board (board &&old): w(old.w), h(old.h), map(old.map) {}
+		board (board &&old): w(old.w), h(old.h), map(old.map) {old.map = nullptr;}
 		board &operator= (board &&old) {
 			h = old.h;
 			w = old.w;
+			if (map != nullptr) delete[] map;
 			map = old.map;
+			old.map = nullptr;
 			return *this;
 		}
 
-		~board () { delete[] map; }
+		~board () { if (map != nullptr) delete[] map; }
 
 		// Access
 #ifdef HAVE_CXX14
