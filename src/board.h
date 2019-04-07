@@ -7,11 +7,11 @@
 #include <stdexcept> // std::runtime_error, std::out_of_range
 #include <type_traits>
 
-#ifndef GAME_GAME_MAP_H_
-#define GAME_GAME_MAP_H_
+#ifndef GAME_BOARD_H_
+#define GAME_BOARD_H_
 
 namespace game {
-	class game_map {
+	class board {
 	public:
 		using chartype = char;
 
@@ -22,9 +22,9 @@ namespace game {
 
 	public:
 		// Constructors, Destructors, Copy/Move
-		game_map (int width, int height, std::function<chartype(game_map*, int, int, int)> setter): w(width), h(height) {
+		board (int width, int height, std::function<chartype(board*, int, int, int)> setter): w(width), h(height) {
 			map = new chartype[height * width + 1]();
-			if (map == nullptr) throw std::runtime_error("game_map::game_map() Out of memory");
+			if (map == nullptr) throw std::runtime_error("board::board() Out of memory");
 			if (setter) {
 				auto engine = std::default_random_engine(std::random_device()());
 				auto distribution = std::uniform_int_distribution<int>(0);
@@ -34,31 +34,31 @@ namespace game {
 			}
 		}
 
-		game_map (int width, int height): game_map(width, height, nullptr) {}
+		board (int width, int height): board(width, height, nullptr) {}
 
-		game_map (const game_map &old): w(old.w), h(old.h) {
+		board (const board &old): w(old.w), h(old.h) {
 			map = new chartype[old.h * old.w + 1]();
-			if (map == nullptr) throw std::runtime_error("game_map::game_map() Out of memory");
+			if (map == nullptr) throw std::runtime_error("board::board() Out of memory");
 			for (int i = 0; i < old.h * old.w; ++i) map[i] = old.map[i];
 		}
-		game_map& operator= (const game_map &old) {
+		board& operator= (const board &old) {
 			w = old.w;
 			h = old.h;
 			map = new chartype[h * w + 1]();
-			if (map == nullptr) throw std::runtime_error("game_map copy assignment: Out of memory");
+			if (map == nullptr) throw std::runtime_error("board copy assignment: Out of memory");
 			for (int i = 0; i < h * w; ++i) map[i] = old.map[i];
 			return *this;
 		}
 
-		game_map (game_map &&old): w(old.w), h(old.h), map(old.map) {}
-		game_map &operator= (game_map &&old) {
+		board (board &&old): w(old.w), h(old.h), map(old.map) {}
+		board &operator= (board &&old) {
 			h = old.h;
 			w = old.w;
 			map = old.map;
 			return *this;
 		}
 
-		~game_map () { delete[] map; }
+		~board () { delete[] map; }
 
 		// Access
 #ifdef HAVE_CXX14

@@ -4,7 +4,7 @@
 
 #include <functional> // std::function
 
-#include "game_map.h"
+#include "board.h"
 
 #ifndef GAME_APP_H_
 #define GAME_APP_H_
@@ -12,13 +12,13 @@
 namespace game {
 	class Application {
 	private:
-		game_map map;
-		using chartype = game_map::chartype;
+		board map;
+		using chartype = board::chartype;
 
 	public:
 		int x, y;
 
-		Application (int width, int height, std::function<char(game_map*, int, int, int)> a = nullptr): map(width, height, a), x(3), y(3) {}
+		Application (int width, int height, std::function<char(board*, int, int, int)> a = nullptr): map(width, height, a), x(3), y(3) {}
 
 #ifdef HAVE_CXX14
 		auto width () const noexcept { return map.width(); }

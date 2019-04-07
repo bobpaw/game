@@ -22,4 +22,4 @@
 #include <monster.h>
 #include <player.h>
 #include <app.h>
-#include <game_map.h>
+#include <board.h>

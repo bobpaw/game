@@ -31,7 +31,7 @@ int main (int argc, char * argv[]) {
 	// Default chance is 40 for a wall
 	// Increases if the nearest are also walls
 	// Meaning: better chance for large chunks of wall
-	game::Application app(width, height, [chance, uchance, dchance](game::game_map* her, int x, int y, int rnd) {
+	game::Application app(width, height, [chance, uchance, dchance](game::board* her, int x, int y, int rnd) {
 		return (rnd % 100 < chance +
 		(her->in_range(x - 1, y) && her->operator()(x - 1, y) == '#' ? uchance : dchance) +
 		(her->in_range(x, y - 1) && her->operator()(x, y - 1) == '#' ? uchance : dchance)) ?
