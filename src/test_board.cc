@@ -1,5 +1,5 @@
 #include <iostream>
-#include <src/board.h>
+#include "board.h"
 
 int main () {
 	std::cout << "width, height constructor" << std::endl;

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./board
+../src/test_board

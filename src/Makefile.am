@@ -4,7 +4,9 @@ game_SOURCES = main.cc main.h app.cc app.h board.h item.h monster.h player.h dat
 game_LDADD = $(CURSES_LIBS)
 game_CXXFLAGS = $(CURSES_CFLAGS)
 EXTRA_DIST = data/items.json data/items.py
-game_CPPFLAGS = -Wall -Wextra -pedantic
+
+check_PROGRAMS = test_board
+test_board_SOURCES = test_board.cc board.h
 
 data/itemlist.h: data/items.json data/items.py
 	data/items.py --build
