@@ -42,4 +42,4 @@ addons:
 # Actually check if it works
 script:
   - autoreconf -f -i && ./configure && make distcheck
-  - make && echo -n "q" | src/game > /dev/null
+  - ./configure && make check
