@@ -5,8 +5,9 @@ game_LDADD = $(CURSES_LIBS)
 game_CXXFLAGS = $(CURSES_CFLAGS)
 EXTRA_DIST = data/items.json data/items.py
 
-check_PROGRAMS = test_board
+check_PROGRAMS = test_board test_app
 test_board_SOURCES = test_board.cc board.h
+test_app_SOURCES = test_app.cc app.cc app.h
 
 data/itemlist.h: data/items.json data/items.py
 	data/items.py --build

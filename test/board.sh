@@ -1,3 +1,3 @@
 #!/bin/sh
 
-../src/test_board
+$(test -x '../src/test_board' && printf '.' || dirname $0)/../src/test_board
