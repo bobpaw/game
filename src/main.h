@@ -10,11 +10,7 @@
 #include <iostream>
 
 // Module Libraries
-#ifdef HAVE_CURSESW
-#include <ncursesw/ncurses.h>
-#else
-#include <ncurses.h>
-#endif
+#include "correct_curses.h"
 
 // Project libraries
 #include <item.h>
