@@ -10,11 +10,36 @@ namespace game {
 		int speed_;
 	public:
 
-		auto max_health () const noexcept { return max_health_; }
-		auto health () const noexcept { return health_; }
-		auto attack () const noexcept { return attack_; }
-		auto defense () const noexcept { return defense_; }
-		auto speed () const noexcept { return speed_; }
+#ifdef HAVE_CXX14
+		auto
+#else
+		decltype(max_health_)
+#endif
+		max_health () const noexcept { return max_health_; }
+#ifdef HAVE_CXX14
+		auto
+#else
+		decltype(health_)
+#endif
+		health () const noexcept { return health_; }
+#ifdef HAVE_CXX14
+		auto
+#else
+		decltype(attack_)
+#endif
+		attack () const noexcept { return attack_; }
+#ifdef HAVE_CXX14
+		auto
+#else
+		decltype(defense_)
+#endif
+		defense () const noexcept { return defense_; }
+#ifdef HAVE_CXX14
+		auto
+#else
+		decltype(speed_)
+#endif
+		speed () const noexcept { return speed_; }
 
 		Stats (int h, int a, int d, int s): max_health_(h), health_(h), attack_(a), defense_(d), speed_(s) {}
 
