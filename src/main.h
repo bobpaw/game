@@ -8,6 +8,7 @@
 #include <cctype>
 #include <random>
 #include <iostream>
+#include <stdexcept>
 
 // Module Libraries
 #include "correct_curses.h"
