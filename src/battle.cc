@@ -64,7 +64,6 @@ namespace {
 } // namespace
 
 int main () {
-	using namespace std::chrono_literals;
 	initscr();
 #ifdef HAVE_CURSES_COLOR
 	if (has_colors() == TRUE) start_color();
@@ -101,14 +100,14 @@ int main () {
 		ch = tolower(getch()); if (ch == 'q' || ch == CTRL('c')) break;
 		if (you.speed() > them.speed()) {
 			your_action();
-			wait_for(500ms);
+			wait_for(std::chrono::milliseconds(500));
 			if (them.health() > 0) them.hit(you);
 		} else {
 			them.hit(you);
-			wait_for(500ms);
+			wait_for(std::chrono::milliseconds(500));
 			if (you.health() > 0) your_action();
 		}
-		wait_for(350ms);
+		wait_for(std::chrono::milliseconds(350));
 	}
 	timeout(-1);
 	if (you.health() <= 0) {
