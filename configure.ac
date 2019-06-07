@@ -19,11 +19,11 @@ AX_CXX_COMPILE_STDCXX([11], [noext], [mandatory])
 fi
 
 # Checks for libraries.
-# FIXME: Replace `main' with a function in `-lncurses':
 AX_WITH_CURSES
+AC_SEARCH_LIBS([floor], [m])
 
 # Checks for header files.
-AC_CHECK_HEADERS([string cstdint iostream functional random])
+AC_CHECK_HEADERS([string cstdint iostream functional random cmath])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_UINT8_T
