@@ -3,6 +3,7 @@
 
 namespace game {
 	class Stats {
+	protected:
 		int max_health_;
 		int health_;
 		int attack_;
@@ -43,7 +44,7 @@ namespace game {
 
 		Stats (int h, int a, int d, int s): max_health_(h), health_(h), attack_(a), defense_(d), speed_(s) {}
 
-		int attack (Stats &other) const noexcept {
+		int hit (Stats &other) const noexcept {
 			other.health_ -= attack_ - other.defense_ + 1;
 			return attack_ - other.defense_ + 1;
 		}
@@ -54,7 +55,7 @@ namespace game {
 			health_ = health_ + amt < max_health_ ? health_ + amt : max_health_;
 			return health_ - oh;
 		}
-	};
+	}; // class Stats
 }
 
 #endif // GAME_STATS_H_
