@@ -2,7 +2,7 @@
 
 namespace game {
 	// Update new health and display
-	void HealthBar::update (int h) {
+	void HealthBar::update (int h) noexcept {
 		if (h < 0 || h > max_health_) return;
 #ifdef HAVE_CURSES_COLOR
 		if (has_color) {
@@ -26,7 +26,7 @@ namespace game {
 	}
 
 	// Redraw
-	void HealthBar::disp () {
+	void HealthBar::disp () noexcept {
 		wborder(win, border_ch[0], border_ch[1], border_ch[2], border_ch[3], border_ch[4], border_ch[5], border_ch[6], border_ch[7]);
 #ifdef HAVE_CURSES_COLOR
 		if (has_color) {

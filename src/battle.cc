@@ -43,7 +43,7 @@ namespace {
 		healthbar(y, x, b_h) {};
 
 		// Update health bar based off health stat
-		void updateBar () {
+		void updateBar () noexcept {
 			healthbar.update(health_ * healthbar.max_health() / max_health_);
 		}
 

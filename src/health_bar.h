@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "correct_curses.h"
 
 #ifndef GAME_HEALTH_BAR_H_
@@ -19,6 +20,8 @@ namespace game {
 		int b0 = 0, int b1 = 0, int b2 = 0, int b3 = 0,
 		int b4 = 0, int b5 = 0, int b6 = 0, int b7 = 0):
 		max_health_(max), cur_health_(max), border_ch{b0, b1, b2, b3, b4, b5, b6, b7} {
+			if (ul_y < 0 || ul_x < 0 || max < 0 || supwin == nullptr)
+				throw std::invalid_argument("HealthBar constructor: invalid argument");
 			win = supwin == stdscr ? newwin(3, max + 2, ul_y, ul_x) :
 			derwin(supwin, 3, max + 2, ul_y, ul_x);
 			has_color = false;
@@ -34,10 +37,10 @@ namespace game {
 		}
 
 		// Update health & display
-		void update (int h);
+		void update (int h) noexcept;
 
 		// Redraw
-		void disp ();
+		void disp () noexcept;
 
 		 ~HealthBar () {
 			delwin(win);
