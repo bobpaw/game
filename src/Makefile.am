@@ -1,5 +1,6 @@
 AUTOMAKE_OPTIONS = gnu
 bin_PROGRAMS = game battle
+AM_CPPFLAGS = -Wall -Wextra -pedantic
 battle_SOURCES = battle.cc health_bar.cc health_bar.h stats.h correct_curses.h
 battle_LDADD = $(CURSES_LIBS)
 battle_CXXFLAGS = $(CURSES_CFLAGS)
