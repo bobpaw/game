@@ -29,8 +29,11 @@ int main (int argc, char * argv[]) {
 	int chance = 40, uchance = 5, dchance = -10;
 
 	int drill = 3;
-	char * invent = new char[invent_used]();
+	int * invent = new int[invent_used]();
 	int me = '@';
+#ifdef HAVE_CURSES_COLOR
+	short item_color_pair = 1;
+#endif
 
 	try { // Catch-all to ensure window is ended
 		// Default chance is 40 for a wall
@@ -43,6 +46,17 @@ int main (int argc, char * argv[]) {
 			'#' : '.';
 		});
 
+		for (int x = 0, y = 0; y < app.height(); ++x) {
+			if (x >= app.width()) {
+				x = 0;
+				++y;
+			}
+			if (app(x, y) == '.') {
+				app.x = x;
+				app.y = y;
+				break;
+			}
+		}
 		auto engine = std::default_random_engine(std::random_device()());
 		auto distribution = std::uniform_int_distribution<int>(0);
 		for (int i = 'a', r = 0; i < max_letter + 1;) {
@@ -55,9 +69,22 @@ int main (int argc, char * argv[]) {
 		curs_set(0);
 		keypad(stdscr, TRUE);
 		noecho();
+#ifdef HAVE_CURSES_COLOR
+		if (has_colors() == TRUE) {
+			start_color();
+			if (init_pair(item_color_pair, COLOR_RED, COLOR_BLACK) == ERR) {
+				endwin();
+				std::cerr << "init_pair: Failed. That should never have happened." << std::endl;
+			}
+		}
+#endif
 		for (int y = 0; y < app.height(); ++y)
 			for (int x = 0; x < app.width(); ++x)
-			mvaddch(y, x, app(x, y));
+				mvaddch(y, x, app(x, y)
+#ifdef HAVE_CURSES_COLOR
+					| ((has_colors() == TRUE && app(x,y) >= 'a' && app(x,y) <= max_letter) ? COLOR_PAIR(item_color_pair) : 0)
+#endif
+				);
 		mvprintw(0, app.width() + 1, "Drills: %d", drill);
 		refresh();
 		// int x = 3, y = 3;
@@ -205,7 +232,11 @@ int main (int argc, char * argv[]) {
 				case 'c':
 					for (int y = 0; y < app.height(); ++y)
 						for (int x = 0; x < app.width(); ++x)
-							mvaddch(y, x, app(x, y));
+							mvaddch(y, x, app(x, y)
+#ifdef HAVE_CURSES_COLOR
+								| (has_colors() && (app(x, y) >= 'a' && app(x, y) <= max_letter) ? COLOR_PAIR(item_color_pair) : 0)
+#endif
+							);
 					mvprintw(0, app.width() + 1, "Drills: %d", drill);
 					for (int i = 0; i < max_letter - 'a'; ++i)
 						mvaddch(app.height(), i, invent[i] != 0 ? invent[i] : ' ');

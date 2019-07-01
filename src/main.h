@@ -1,5 +1,7 @@
-#ifdef HAVE_CONFIG_H
+#if defined(HAVE_CONFIG_H)
 #include <config.h>
+#elif defined(HAVE_CMAKECONFIG_H)
+#include <cmakeconfig.h>
 #endif
 
 // C++ standard libraries

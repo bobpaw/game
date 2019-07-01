@@ -63,7 +63,7 @@ namespace {
 	}; // class Player
 } // namespace
 
-int main () {
+int main (int argc, char *argv[]) {
 	initscr();
 #ifdef HAVE_CURSES_COLOR
 	if (has_colors() == TRUE) start_color();

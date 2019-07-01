@@ -34,7 +34,7 @@ def item(class_name, type_name, name, power):
 	retval["power"] = power
 	return retval
 
-with open("items.json", "r") as f:
+with open(sys.argv[0][:-2] + "json", "r") as f:
 	itemlist = json.load(f)
 	item_count = len(itemlist)
 
@@ -54,15 +54,15 @@ namespace game {"""
 	, file=f)
 	print("\tconst std::array<item,{}> item_list = {{".format(len(itemlist)), file=f)
 	for i, item in enumerate(itemlist):
-		print("\t\titem(", file=f, end='')
+		print("\t\titem(", file=f, end="")
 		for e, entry in enumerate(prop_order):
-			print(str(h_ify(item[entry])) + ("," if e != len(prop_order) - 1 else ""), file=f, end='')
+			print(str(h_ify(item[entry])) + ("," if e != len(prop_order) - 1 else ""), file=f, end="")
 		print(")," if i != len(itemlist) - 1 else ")", file=f)
 	print("\t};", file=f)
 	print("", file=f)
 	print("} // namespace game", file=f)
 	print("#endif // GAME_ITEMLIST_H_", file=f)
 
-if '--build' in sys.argv:
-	with open('itemlist.h', 'w') as f:
+if "--build" in sys.argv:
+	with open(sys.argv[0][:-4] + "list.h", "w") as f:
 		gen_h_file(itemlist, f)

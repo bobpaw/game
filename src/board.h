@@ -1,5 +1,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
+#elif defined(HAVE_CMAKECONFIG_H)
+#include <cmakeconfig.h>
 #endif
 
 #include <functional> // std::function
@@ -58,8 +60,8 @@ namespace game {
 			return *this;
 		}
 
-		board (board &&old): w(old.w), h(old.h), map(old.map) {old.map = nullptr;}
-		board &operator= (board &&old) {
+		board (board &&old) noexcept: w(old.w), h(old.h), map(old.map) {old.map = nullptr;}
+		board &operator= (board &&old) noexcept {
 			h = old.h;
 			w = old.w;
 			if (map != nullptr) delete[] map;
@@ -71,7 +73,7 @@ namespace game {
 		~board () { if (map != nullptr) delete[] map; }
 
 		// Access
-#ifdef HAVE_CXX14
+#if defined(HAVE_AUTO_RETURN) || defined(HAVE_CXX14) || __cplusplus > 201400
 		auto width () const noexcept { return w; }
 		auto height () const noexcept { return h; }
 #else

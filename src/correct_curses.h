@@ -1,5 +1,9 @@
-#ifdef HAVE_CONFIG_H
+#if defined(HAVE_CONFIG_H) || defined(HAVE_CMAKE_CONFIG_H)
+#if defined(HAVE_CONFIG_H)
 #include <config.h>
+#else
+#include <cmakeconfig.h>
+#endif
 
 #if defined HAVE_NCURSESW_CURSES_H
 #  include <ncursesw/curses.h>
@@ -14,7 +18,6 @@
 #else
 #  error "SysV or X/Open-compatible Curses header file required"
 #endif
-
 #else
 
 // Fingers-crossed

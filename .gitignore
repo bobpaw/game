@@ -18,3 +18,9 @@ config.status
 # Objects
 *.o
 
+# VisualStudio
+.vs/
+
+# cmake
+out/
+build/

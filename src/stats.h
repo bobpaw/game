@@ -1,3 +1,9 @@
+#if defined(HAVE_CONFIG_H)
+#include <config.h>
+#elif defined(HAVE_CMAKECONFIG_H)
+#include <cmakedefine.h>
+#endif
+
 #ifndef GAME_STATS_H_
 #define GAME_STATS_H_
 
@@ -11,36 +17,17 @@ namespace game {
 		int speed_;
 	public:
 
-#ifdef HAVE_CXX14
-		auto
+#if defined(HAVE_AUTO_RETURN) || defined(HAVE_CXX14) || __cplusplus > 201400
+#define GETTER(var) auto var () const noexcept { return var ## _ ; }
 #else
-		decltype(max_health_)
+#define GETTER(var) decltype(var ## _) var () const noexcept { return var ## _ ; }
 #endif
-		max_health () const noexcept { return max_health_; }
-#ifdef HAVE_CXX14
-		auto
-#else
-		decltype(health_)
-#endif
-		health () const noexcept { return health_; }
-#ifdef HAVE_CXX14
-		auto
-#else
-		decltype(attack_)
-#endif
-		attack () const noexcept { return attack_; }
-#ifdef HAVE_CXX14
-		auto
-#else
-		decltype(defense_)
-#endif
-		defense () const noexcept { return defense_; }
-#ifdef HAVE_CXX14
-		auto
-#else
-		decltype(speed_)
-#endif
-		speed () const noexcept { return speed_; }
+		GETTER(max_health)
+		GETTER(health)
+		GETTER(attack)
+		GETTER(defense)
+		GETTER(speed)
+#undef GETTER
 
 		Stats (int h, int a, int d, int s): max_health_(h), health_(h), attack_(a), defense_(d), speed_(s) {}
 
