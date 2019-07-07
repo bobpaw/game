@@ -109,7 +109,7 @@ find_library(HAVE_MATH m)
 
 # Check for types
 check_cxx_symbol_exists(uint8_t cstdint HAVE_UINT8_T)
-check_cxx_symbol_exists(uint16_t cstdint HAVE_UINT18_T)
+check_cxx_symbol_exists(uint16_t cstdint HAVE_UINT16_T)
 
 add_compile_definitions(HAVE_CMAKE_CONFIG_H)
 configure_file(cmakeconfig.h.in cmakeconfig.h ESCAPE_QUOTES @ONLY)

@@ -112,4 +112,4 @@
 
 #cmakedefine HAVE_UINT8_T
 
-#cmakedefine HAVE_UINT16_t
+#cmakedefine HAVE_UINT16_T
