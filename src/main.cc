@@ -274,6 +274,7 @@ int main (int argc, char * argv[]) {
 				--invent_used;
 			}
 			if (invent_used == 0) {
+				flash();
 				mvaddstr(app.height() + 1, 0, "Done!");
 				refresh();
 			}
