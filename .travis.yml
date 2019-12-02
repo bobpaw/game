@@ -12,7 +12,7 @@ compiler:
 
 # Set autoconf version
 env:
-  - VERSION=1.0
+  - VERSION=0.0
 
 # Test both linux and osx
 os:
@@ -41,5 +41,4 @@ addons:
 
 # Actually check if it works
 script:
-  - autoreconf -f -i && ./configure && make distcheck
-  - ./configure && make check
+  - mkdir build && cd build && cmake .. && cmake --build .
