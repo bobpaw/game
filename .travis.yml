@@ -24,12 +24,8 @@ addons:
   apt:
     packages:
     - ncurses-base
-    - libncurses-dev
-    - make
-    - autoconf
-    - automake
-    - m4
-    - perl
+    - ncurses-dev
+    - cmake
 
 ## UPDATE: Release is important, but I need to check developement
 # Make sure to change to the distribution directory
@@ -41,4 +37,4 @@ addons:
 
 # Actually check if it works
 script:
-  - mkdir build && cd build && cmake .. && cmake --build .
+  - mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
