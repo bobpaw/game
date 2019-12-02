@@ -68,12 +68,22 @@ namespace {
 	}; // class Player
 } // namespace
 
+#if defined(_WIN32)
 #define b_log(str, ...) do { \
 scroll(log); \
 mvwprintw(log, 11, 0, str, __VA_ARGS__); \
 box(log_box, 0, 0); \
 wrefresh(log_box); \
 wrefresh(log); } while (0)
+#else
+#define b_log(str, ...) do { \
+scroll(log); \
+mvwprintw(log, 11, 0, str __VA_OPT__(,) __VA_ARGS__); \
+box(log_box, 0, 0); \
+wrefresh(log_box); \
+wrefresh(log); } while (0)
+#endif
+
 
 int main (int argc, char* argv[]) {
 	initscr();
