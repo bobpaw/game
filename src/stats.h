@@ -15,6 +15,7 @@ namespace game {
 		int attack_;
 		int defense_;
 		int speed_;
+		bool blocking_;
 	public:
 
 #if defined(HAVE_AUTO_RETURN) || defined(HAVE_CXX14) || __cplusplus > 201400
@@ -23,17 +24,20 @@ namespace game {
 #define GETTER(var) decltype(var ## _) var () const noexcept { return var ## _ ; }
 #endif
 		GETTER(max_health)
-		GETTER(health)
-		GETTER(attack)
-		GETTER(defense)
-		GETTER(speed)
+			GETTER(health)
+			GETTER(attack)
+			GETTER(defense)
+			GETTER(speed)
 #undef GETTER
 
-		Stats (int h, int a, int d, int s): max_health_(h), health_(h), attack_(a), defense_(d), speed_(s) {}
+			Stats (int h, int a, int d, int s): max_health_(h), health_(h),
+			attack_(a), defense_(d), speed_(s), blocking_(false) {}
 
-		int hit (Stats &other) const noexcept {
-			other.health_ -= attack_ - other.defense_ + 1;
-			return attack_ - other.defense_ + 1;
+		int hit (Stats& other) const noexcept {
+			int damage = attack_ - other.defense_ * (other.blocking_ ? 2 : 1) + 1;
+			damage = damage > 0 ? damage : 0;
+			other.health_ -= damage;
+			return damage;
 		}
 
 		int heal (int amt) noexcept {
@@ -41,6 +45,14 @@ namespace game {
 			int oh = health_;
 			health_ = health_ + amt < max_health_ ? health_ + amt : max_health_;
 			return health_ - oh;
+		}
+
+		void block () noexcept {
+			blocking_ = true;
+		}
+
+		void unblock () noexcept {
+			blocking_ = false;
 		}
 	}; // class Stats
 }
