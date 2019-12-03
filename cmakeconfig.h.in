@@ -113,3 +113,7 @@
 #cmakedefine HAVE_UINT8_T
 
 #cmakedefine HAVE_UINT16_T
+
+#cmakedefine VA_ARGS_NONE
+#cmakedefine VA_ARGS_OPT
+#cmakedefine VA_ARGS_CAT

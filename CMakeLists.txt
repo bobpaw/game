@@ -17,6 +17,7 @@ include(CheckIncludeFile)
 include(CheckCXXCompilerFlag)
 include(CheckSymbolExists)
 include(CheckCXXSymbolExists)
+include(cmake/CheckVaArgs.cmake)
 
 if ($<COMPILE_FEATURES:cxx_return_type_deduction>)
 	set(HAVE_AUTO_RETURN YES)
@@ -34,6 +35,8 @@ if (USE_PDCURSES)
 else()
 	include(FindCurses)
 endif()
+
+check_va_args_macro()
 
 if ($<CONFIG:Debug>)
 	check_cxx_compiler_flag(-W4 HAVE_W4)
@@ -127,7 +130,12 @@ find_library(HAVE_MATH m)
 check_cxx_symbol_exists(uint8_t cstdint HAVE_UINT8_T)
 check_cxx_symbol_exists(uint16_t cstdint HAVE_UINT16_T)
 
+if ($<VERSION_GREATER_EQUAL:"${CMAKE_VERSION}","3.12")
 add_compile_definitions(HAVE_CMAKE_CONFIG_H)
+else()
+add_compile_options(-DHAVE_CMAKE_CONFIG_H)
+endif()
+
 configure_file(cmakeconfig.h.in cmakeconfig.h ESCAPE_QUOTES @ONLY)
 
 add_subdirectory(src)

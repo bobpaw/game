@@ -68,14 +68,21 @@ namespace {
 	}; // class Player
 } // namespace
 
-#if defined(_WIN32)
+#if defined(VA_ARGS_NONE)
 #define b_log(str, ...) do { \
 scroll(log); \
 mvwprintw(log, 11, 0, str, __VA_ARGS__); \
 box(log_box, 0, 0); \
 wrefresh(log_box); \
 wrefresh(log); } while (0)
-#else
+#elif defined(VA_ARGS_OPT)
+#define b_log(str, ...) do { \
+scroll(log); \
+mvwprintw(log, 11, 0, str __VA_OPT__(,) __VA_ARGS__); \
+box(log_box, 0, 0); \
+wrefresh(log_box); \
+wrefresh(log); } while (0)
+#elif defined(VA_ARGS_CAT)
 #define b_log(str, ...) do { \
 scroll(log); \
 mvwprintw(log, 11, 0, str __VA_OPT__(,) __VA_ARGS__); \
