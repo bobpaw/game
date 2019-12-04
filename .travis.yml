@@ -1,5 +1,7 @@
-# Project is written in C (defines some useful defaults)
+# Project is written in C++ (defines some useful defaults)
 language: cpp
+
+cache: ccache
 
 # Save time by only getting the current repository status
 git:
@@ -23,13 +25,13 @@ os:
 addons:
   apt:
     packages:
-    - ncurses-base
     - ncurses-dev
     - cmake
   homebrew:
     packages:
 	- ncurses
 	- cmake
+	- ccache
 	- python3
 
 ## UPDATE: Release is important, but I need to check developement
