@@ -9,8 +9,8 @@ git:
 
 # Test both clang and gcc
 compiler:
-  - clang
   - gcc
+  - clang
 
 
 # Test both linux and osx
