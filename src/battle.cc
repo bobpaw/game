@@ -25,7 +25,7 @@ namespace {
 		if (level == 1) return 0;
 		double result = 20 * std::pow(level, 1.7);
 		double tens = std::pow(10, std::ceil(std::log10(result) - 3));
-		return std::floor(result / tens) * tens;
+		return static_cast<int>(std::floor(result / tens) * tens);
 	}
 
 	int cumLevel (int level) {
@@ -85,7 +85,34 @@ wrefresh(log); } while (0)
 #elif defined(VA_ARGS_CAT)
 #define b_log(str, ...) do { \
 scroll(log); \
-mvwprintw(log, 11, 0, str __VA_OPT__(,) __VA_ARGS__); \
+mvwprintw(log, 11, 0, str, ##__VA_ARGS__); \
+box(log_box, 0, 0); \
+wrefresh(log_box); \
+wrefresh(log); } while (0)
+#else
+
+#define EXPAND(x) x
+
+// Don't put to many arguments I guess
+#define GETNAME(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, \
+_12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, \
+_23, _24, _25, _26, _27, _28, _29, _30, NAME, ...) NAME
+
+#define b_log(...) GETNAME(__VA_ARGS__, b_log2, b_log2, b_log2, b_log2, b_log2, \
+b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, \
+b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, b_log2, \
+b_log2, b_log2, b_log2, b_log2, b_log1)(__VA_ARGS__)
+
+#define b_log1(str) do { \
+scroll(log); \
+mvwprintw(log, 11, 0, str); \
+box(log_box, 0, 0); \
+wrefresh(log_box); \
+wrefresh(log); } while (0)
+
+#define b_log2(str, ...) do { \
+scroll(log); \
+mvwprintw(log, 11, 0, str, __VA_ARGS__); \
 box(log_box, 0, 0); \
 wrefresh(log_box); \
 wrefresh(log); } while (0)
