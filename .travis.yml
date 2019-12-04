@@ -84,4 +84,4 @@ before_script:
 
 # Actually check if it works
 script:
-  - cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build build
+  - cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
