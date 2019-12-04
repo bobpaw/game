@@ -18,7 +18,7 @@ os:
   - linux
   - osx
 
-# Install requirements with apt
+ # Install requirements with apt
 addons:
   apt:
     packages:
@@ -31,11 +31,59 @@ addons:
 	- ccache
 	- python3
 
+
+# Build Matrix
+matrix:
+  fast_finish: true
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env:
+         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+# " Fixes Visual Studio highlighting
+
 before_script:
   - cmake --version
   - mkdir build
-
-
 
 # Actually check if it works
 script:
