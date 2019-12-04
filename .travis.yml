@@ -30,7 +30,6 @@ addons:
     - cmake
     - ccache
     - python3
-    update: true
 
 
 # Build Matrix
