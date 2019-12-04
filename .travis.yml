@@ -26,6 +26,11 @@ addons:
     - ncurses-base
     - ncurses-dev
     - cmake
+  homebrew:
+    packages:
+	- ncurses
+	- cmake
+	- python3
 
 ## UPDATE: Release is important, but I need to check developement
 # Make sure to change to the distribution directory
