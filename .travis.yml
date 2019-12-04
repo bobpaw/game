@@ -12,9 +12,6 @@ compiler:
   - clang
   - gcc
 
-# Set autoconf version
-env:
-  - VERSION=0.0
 
 # Test both linux and osx
 os:
@@ -34,14 +31,12 @@ addons:
 	- ccache
 	- python3
 
-## UPDATE: Release is important, but I need to check developement
-# Make sure to change to the distribution directory
-#before_script:
-#  - tar zxf "game-${VERSION}.tar.gz"
-#  - cd "game-${VERSION}"
+before_script:
+  - cmake --version
+  - mkdir build
 
 
 
 # Actually check if it works
 script:
-  - mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
+  - cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build && cmake --build build
