@@ -24,3 +24,7 @@ add_executable(battle battle.cc health_bar stats.h correct_curses.h)
 target_compile_features(battle PRIVATE cxx_noexcept cxx_auto_type cxx_decltype)
 target_include_directories(battle PRIVATE "${CURSES_INCLUDE_DIRS}")
 target_link_libraries(battle "${CURSES_LIBRARIES}")
+
+# Tests
+add_executable(test_app EXCLUDE_FROM_ALL test_app.cc app correct_curses.h)
+add_executable(test_board EXCLUDE_FROM_ALL test_board.cc board.h correc_curses.h

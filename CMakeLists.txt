@@ -12,6 +12,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 # Macros and stuff
+include(CTest)
 include(CheckIncludeFileCXX)
 include(CheckIncludeFile)
 include(CheckCXXCompilerFlag)
@@ -139,4 +140,7 @@ endif()
 configure_file(cmakeconfig.h.in cmakeconfig.h ESCAPE_QUOTES @ONLY)
 
 add_subdirectory(src)
-# add_subdirectory(test)
+
+if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR GAME_BUILD_TESTING) AND BUILD_TESTING)
+add_subdirectory(test)
+endif()
