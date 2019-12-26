@@ -81,7 +81,9 @@ before_install:
 before_script:
   - cmake --version
   - mkdir build
+  - cd build
 
 # Actually check if it works
 script:
-  - cd build && cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=True .. && cmake --build .
+  - cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=True .. && cmake --build .
+  - ctest -j4

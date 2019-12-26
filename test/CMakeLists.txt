@@ -3,7 +3,7 @@ add_test(
 		AppTest
 	COMMAND
 		"${CMAKE_CTEST_COMMAND}"
-			--build-and-test "${CMAKE_SOURCE_DIR}/src" "${CMAKE_CURRENT_BINARY_DIR}/src"
+			--build-and-test "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}"
 			--build-generator "${CMAKE_GENERATOR}"
 			--build-target test_app
 			--test-command "$<TARGET_FILE:test_app>"
@@ -14,11 +14,11 @@ add_test(
 		BoardTest
 	COMMAND
 		"${CMAKE_CTEST_COMMAND}"
-			--build-and-test "${CMAKE_SOURCE_DIR}/src" "${CMAKE_CURRENT_BINARY_DIR}/src"
+			--build-and-test "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}"
 			--build-generator "${CMAKE_GENERATOR}"
 			--build-target test_board
-			--test-command "$<TARGET_FILE:test_board"
+			--test-command "$<TARGET_FILE:test_board>"
 )
 
-add_test(NAME GameTest COMMAND game)
+add_test(NAME GameTest COMMAND "${CMAKE_COMMAND}" -E echo_append "q" | "$<TARGET_FILE:game>")
 

@@ -12,7 +12,10 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 # Macros and stuff
+if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 include(CTest)
+endif()
+
 include(CheckIncludeFileCXX)
 include(CheckIncludeFile)
 include(CheckCXXCompilerFlag)
