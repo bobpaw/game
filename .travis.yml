@@ -12,7 +12,6 @@ compiler:
   - gcc
   - clang
 
-
 # Test both linux and osx
 os:
   - linux
@@ -35,7 +34,6 @@ addons:
     - cmake
     - ccache
     - python3
-
 
 # Build Matrix
 matrix:
@@ -89,7 +87,7 @@ before_install:
 # " Fixes Visual Studio highlighting
 
 install:
-  - [ "$TRAVIS_OS_NAME" = "windows" ] && sh ./travis-windows-setup.sh
+  - ./travis-windows-setup.sh
 
 before_script:
   - cmake --version
