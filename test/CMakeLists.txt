@@ -5,6 +5,7 @@ add_test(
 		"${CMAKE_CTEST_COMMAND}"
 			--build-and-test "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}"
 			--build-generator "${CMAKE_GENERATOR}"
+			--build-nocmake
 			--build-target test_app
 			--test-command "$<TARGET_FILE:test_app>"
 )
@@ -16,6 +17,7 @@ add_test(
 		"${CMAKE_CTEST_COMMAND}"
 			--build-and-test "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}"
 			--build-generator "${CMAKE_GENERATOR}"
+			--build-nocmake
 			--build-target test_board
 			--test-command "$<TARGET_FILE:test_board>"
 )
