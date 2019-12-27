@@ -28,3 +28,5 @@ target_link_libraries(battle "${CURSES_LIBRARIES}")
 # Tests
 add_executable(test_app EXCLUDE_FROM_ALL test_app.cc app correct_curses.h)
 add_executable(test_board EXCLUDE_FROM_ALL test_board.cc board.h correct_curses.h)
+target_compile_features(test_app PRIVATE cxx_std_11)
+target_compile_features(test_board PRIVATE cxx_std_11)

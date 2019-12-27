@@ -84,6 +84,6 @@ before_script:
 
 # Actually check if it works
 script:
-  - cmake -DCMAKE_BUILD_TYPE=Debug ..
-  - cmake --build . -j4 -V
-  - ctest -j4 -VV
+  - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_BUILD_PARALLEL_LEVEL=2 -DCMAKE_VERBOSE_MAKEFILE=TRUE ..
+  - cmake --build .
+  - ctest -j2 -VV
