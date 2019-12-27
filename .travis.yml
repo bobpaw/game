@@ -18,6 +18,10 @@ os:
   - linux
   - osx
 
+env:
+  - GENERATOR="Ninja"
+  - GENERATOR="Unix Makefiles"
+
 # Install requirements with apt
 addons:
   apt:
@@ -35,6 +39,9 @@ addons:
 # Build Matrix
 matrix:
   fast_finish: true
+  exclude:
+    - compiler: clang
+      env: GENERATOR="Ninja"
   include:
     - os: linux
       addons:
