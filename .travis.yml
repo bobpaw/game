@@ -17,6 +17,7 @@ compiler:
 os:
   - linux
   - osx
+  - windows
 
 env:
   - GENERATOR="Ninja"
@@ -42,6 +43,8 @@ matrix:
   exclude:
     - compiler: clang
       env: GENERATOR="Ninja"
+    - os: windows
+      env: GENERATOR="Unix Makefiles"
   include:
     - os: linux
       addons:
