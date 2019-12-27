@@ -140,7 +140,7 @@ else()
 add_compile_options(-DHAVE_CMAKE_CONFIG_H)
 endif()
 
-configure_file("${PROJECT_SOURCE_DIR}/cmakeconfig.h.in" "${PROJECT_SOURCE_DIR}/cmakeconfig.h" ESCAPE_QUOTES @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/cmakeconfig.h.in" "${PROJECT_BINARY_DIR}/cmakeconfig.h" ESCAPE_QUOTES @ONLY)
 
 add_subdirectory(src)
 
