@@ -9,19 +9,22 @@
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 // #include <stdlib.h>
 
 #ifndef GAME_PLAYER_H_
 #define GAME_PLAYER_H_
 
-typedef struct player_t {
-	char * name;
-} player_t; // struct player_t
+namespace game {
+	class player {
+	public:
+		std::string name;
+	}; // class player
+} // namespace game
 
 #endif // GAME_PLAYER_H_

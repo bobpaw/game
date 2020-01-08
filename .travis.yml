@@ -1,5 +1,7 @@
-# Project is written in C (defines some useful defaults)
-language: c
+# Project is written in C++ (defines some useful defaults)
+language: cpp
+
+cache: ccache
 
 # Save time by only getting the current repository status
 git:
@@ -7,39 +9,94 @@ git:
 
 # Test both clang and gcc
 compiler:
-  - clang
   - gcc
-
-# Set autoconf version
-env:
-  - VERSION=1.0
+  - clang
 
 # Test both linux and osx
 os:
   - linux
   - osx
+  - windows
+
+env:
+  - GENERATOR="Ninja"
+  - GENERATOR="Unix Makefiles"
 
 # Install requirements with apt
 addons:
   apt:
     packages:
-    - ncurses-base
-    - libncurses-dev
-    - make
-    - autoconf
-    - automake
-    - m4
-    - perl
+    - ncurses-dev
+    - cmake
+  homebrew:
+    packages:
+    - ncurses
+    - cmake
+    - ccache
+    - python3
 
-## UPDATE: Release is important, but I need to check developement
-# Make sure to change to the distribution directory
-#before_script:
-#  - tar zxf "game-${VERSION}.tar.gz"
-#  - cd "game-${VERSION}"
+# Build Matrix
+matrix:
+  fast_finish: true
+  exclude:
+    - compiler: clang
+      env: GENERATOR="Ninja"
+    - os: windows
+      env: GENERATOR="Unix Makefiles"
+  allow_failures:
+    - os: windows
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env:
+         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 
 
+before_install:
+  - eval "${MATRIX_EVAL}"
+# " Fixes Visual Studio highlighting
+
+install:
+  - ./travis-windows-setup.sh
+
+before_script:
+  - cmake --version
+  - mkdir build && cd build
 
 # Actually check if it works
 script:
-  - autoreconf -f -i && ./configure && make && make check
-  - echo -n "q" | src/game > /dev/null
+  - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_BUILD_PARALLEL_LEVEL=2 -DCMAKE_VERBOSE_MAKEFILE=TRUE ..
+  - cmake --build .
+  - ctest -j2 -VV
