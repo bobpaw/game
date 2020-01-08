@@ -35,8 +35,13 @@ addons:
     - ccache
     - python3
 
+# Stages (i.e. default is compile
+stages:
+  - compile
+  - test
+
 # Build Matrix
-matrix:
+jobs:
   fast_finish: true
   exclude:
     - compiler: clang
@@ -82,6 +87,12 @@ matrix:
             - g++-7
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+    - stage: test
+      compiler: gcc
+      script:
+        - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_BUILD_PARALLEL_LEVEL=2 -DCMAKE_VERRBOSE_MAKEFILE=TRUE ..
+        - cmake --build .
+        -- ctest -j2 -VV
 
 
 before_install:
@@ -99,4 +110,3 @@ before_script:
 script:
   - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_BUILD_PARALLEL_LEVEL=2 -DCMAKE_VERBOSE_MAKEFILE=TRUE ..
   - cmake --build .
-  - ctest -j2 -VV
