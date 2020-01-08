@@ -1,20 +1,59 @@
-#include <array>
-
 #include "item.h"
 
 #ifndef GAME_ITEMLIST_H_
 #define GAME_ITEMLIST_H_
 
-namespace game {
-	const std::array<item,7> item_list = {
-		item(0,weapon,fists,"Unarmed",1),
-		item(1,armor,all,"Bare",0),
-		item(2,weapon,onehand,"Dagger",2),
-		item(3,armor,chest,"Tunic",1),
-		item(4,hold,hp,"Level 1 Potion",1),
-		item(5,armor,shield,"Leather Shield",2),
-		item(6,weapon,onehand,"Short Sword",3)
-	};
+const item_t item_list[] = {
+	{
+		.id = 0,
+		.class = CLASS_WEAPON,
+		.type = WPN_TYPE_FISTS,
+		.name = "Unarmed",
+		.power = 1
+	},
+	{
+		.id = 1,
+		.class = CLASS_ARMOR,
+		.type = ARM_TYPE_ALL,
+		.name = "Bare",
+		.power = 0
+	},
+	{
+		.id = 2,
+		.class = CLASS_WEAPON,
+		.type = WPN_TYPE_ONEHAND,
+		.name = "Dagger",
+		.power = 2
+	},
+	{
+		.id = 3,
+		.class = CLASS_ARMOR,
+		.type = ARM_TYPE_CHEST,
+		.name = "Tunic",
+		.power = 1
+	},
+	{
+		.id = 4,
+		.class = CLASS_HOLD,
+		.type = HLD_TYPE_HP,
+		.name = "Level 1 Potion",
+		.power = 1
+	},
+	{
+		.id = 5,
+		.class = CLASS_ARMOR,
+		.type = ARM_TYPE_SHIELD,
+		.name = "Leather Shield",
+		.power = 2
+	},
+	{
+		.id = 6,
+		.class = CLASS_WEAPON,
+		.type = WPN_TYPE_ONEHAND,
+		.name = "Short Sword",
+		.power = 3
+}
+};
 
-} // namespace game
+const uint16_t item_count = 7;
 #endif // GAME_ITEMLIST_H_

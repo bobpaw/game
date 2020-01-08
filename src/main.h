@@ -1,21 +1,22 @@
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#include "config.h"
 
-// C++ standard libraries
-// #include <string>
-#include <cstdint>
-#include <cctype>
-#include <random>
-#include <iostream>
+// C standard libraries
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <time.h>
+#include <stdint.h>
+#include <ctype.h>
 
 // Module Libraries
-#include "correct_curses.h"
+#ifdef HAVE_CURSESW
+#include <ncursesw/ncurses.h>
+#else
+#include <ncurses.h>
+#endif
 
 // Project libraries
 #include <item.h>
-#include <data/itemlist.h>
 #include <monster.h>
 #include <player.h>
-#include <app.h>
-#include <board.h>
+#include <data/itemlist.h>
