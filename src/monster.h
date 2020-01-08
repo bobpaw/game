@@ -9,18 +9,21 @@
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #ifndef GAME_MONSTER_H_
 #define GAME_MONSTER_H_
 
-typedef struct monster_t {
-	int type_id;
-	char * name;
-} monster_t; // struct monster
+namespace game {
+	class monster {
+	public:
+		int type_id;
+		std::string name;
+	}; // class monster
+}
 
 #endif // GAME_MONSTER_H_

@@ -1,5 +1,5 @@
 # Project is written in C (defines some useful defaults)
-language: c
+language: cpp
 
 # Save time by only getting the current repository status
 git:
@@ -41,5 +41,5 @@ addons:
 
 # Actually check if it works
 script:
-  - autoreconf -f -i && ./configure && make && make check
-  - echo -n "q" | src/game > /dev/null
+  - autoreconf -f -i && ./configure && make distcheck
+  - ./configure && make check
