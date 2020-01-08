@@ -92,7 +92,7 @@ jobs:
       script:
         - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_BUILD_PARALLEL_LEVEL=2 -DCMAKE_VERRBOSE_MAKEFILE=TRUE ..
         - cmake --build .
-        -- ctest -j2 -VV
+        - ctest -j2 -VV
 
 
 before_install:
