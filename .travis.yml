@@ -43,6 +43,8 @@ matrix:
       env: GENERATOR="Ninja"
     - os: windows
       env: GENERATOR="Unix Makefiles"
+  allow_failures:
+    - os: windows
   include:
     - os: linux
       addons:
