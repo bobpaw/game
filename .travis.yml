@@ -27,13 +27,14 @@ addons:
   apt:
     packages:
     - ncurses-dev
+    - jq
     - cmake
   homebrew:
     packages:
     - ncurses
     - cmake
     - ccache
-    - python3
+    - jq
 
 # Build Matrix
 matrix:
