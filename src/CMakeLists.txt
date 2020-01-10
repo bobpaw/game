@@ -13,7 +13,7 @@ target_compile_features(health_bar PUBLIC cxx_noexcept cxx_uniform_initializatio
 target_include_directories(health_bar PUBLIC "${CURSES_INCLUDE_DIRS}")
 
 if (HAVE_JQ)
-	add_custom_command(OUTPUT data/itemlist.h COMMAND "${PROJECT_SOURCE_DIR}/src/data/items.sh" "--build" MAIN_DEPENDENCY data/items.json DEPENDS data/items.jq)
+	add_custom_command(OUTPUT data/itemlist.h COMMAND "${PROJECT_SOURCE_DIR}/src/data/items.sh" ARGS "--build" MAIN_DEPENDENCY data/items.json)
 else()
 	if (HAS_FINDPYTHON3) # Don't bother if there's no FindPython3 file
 		find_package(Python3 COMPONENTS Interpreter)
