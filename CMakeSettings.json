@@ -10,23 +10,8 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
-      "variables": [
-        {
-          "name": "USE_PDCURSES",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "PDCURSES_SRCDIR",
-          "value": "C:\\PDCurses",
-          "type": "STRING"
-        },
-        {
-          "name": "PDCURSES_LIBRARIES",
-          "value": "C:/PDCurses/wincon/pdcurses64.lib",
-          "type": "FILEPATH"
-        }
-      ]
+      "variables": [],
+      "cmakeToolchain": "C:/devel/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     {
       "name": "x86-Debug",
@@ -39,16 +24,6 @@
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x86" ],
       "variables": [
-        {
-          "name": "USE_PDCURSES",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "PDCURSES_LIBRARIES",
-          "value": "C:/PDCurses/wincon/pdcurses32.lib",
-          "type": "FILEPATH"
-        },
         {
           "name": "EXTRA_GLOBAL_OPTIONS",
           "value": "",
@@ -71,18 +46,7 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": [
-        {
-          "name": "USE_PDCURSES",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "PDCURSES_LIBRARIES",
-          "value": "C:/PDCurses/wincon/pdcurses64.lib",
-          "type": "FILEPATH"
-        }
-      ]
+      "variables": []
     },
     {
       "name": "x86-Release",
@@ -94,18 +58,7 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x86" ],
-      "variables": [
-        {
-          "name": "USE_PDCURSES",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "PDCURSES_LIBRARIES",
-          "value": "C:/PDCurses/wincon/pdcurses32.lib",
-          "type": "FILEPATH"
-        }
-      ]
+      "variables": []
     },
     {
       "name": "WSL-Clang-Debug",
