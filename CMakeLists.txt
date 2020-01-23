@@ -23,7 +23,7 @@ include(CheckSymbolExists)
 include(CheckCXXSymbolExists)
 include(cmake/CheckVaArgs.cmake)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindPDCurses)
 
 if ($<COMPILE_FEATURES:cxx_return_type_deduction>)
 	set(HAVE_AUTO_RETURN YES)
